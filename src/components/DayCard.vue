@@ -163,7 +163,7 @@ export default {
 /*  */
 .card:hover {
   transform: scale(1.02);
-  box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
 }
 
 .card:hover .card-actions {

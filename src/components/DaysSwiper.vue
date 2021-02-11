@@ -95,14 +95,10 @@ export default {
   z-index: 990;
   left: 0;
   right: auto;
-  height: 100%;
-  width: 20%;
-  background: linear-gradient(
-    -90deg,
-    transparent 10%,
-    30%,
-    rgba(255 255 255 / 1)
-  );
+  top: 10%;
+  bottom: 0;
+  width: 10%;
+  background: linear-gradient(90deg, rgba(255 255 255 / 1) 50%, transparent);
 }
 
 /* fade effect right */
@@ -112,14 +108,11 @@ export default {
   z-index: 990;
   right: 0;
   left: auto;
+  top: 10%;
+  bottom: auto;
   height: 100%;
-  width: 20%;
-  background: linear-gradient(
-    90deg,
-    transparent 10%,
-    30%,
-    rgba(255 255 255 / 1)
-  );
+  width: 10%;
+  background: linear-gradient(-90deg, rgba(255 255 255 / 1) 50%, transparent);
 }
 
 .swiper-btn-prev {
@@ -165,5 +158,13 @@ export default {
 .swiper-slide {
   display: flex;
   justify-content: center;
+}
+
+.swiper-slide.swiper-slide-prev {
+  transform: translate(-200px, 0);
+}
+
+.swiper-slide.swiper-slide-next {
+  transform: translate(200px, 0);
 }
 </style>

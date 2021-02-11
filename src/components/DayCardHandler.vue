@@ -37,13 +37,13 @@ export default {
   color: white;
   border-radius: 4px;
   /* padding-bottom: 5px; */
-  margin: 10px 50px;
+  margin: 10px 10px;
 
   background: linear-gradient(
     135deg,
     rgb(185, 140, 221),
     rgb(144, 133, 245)
   );
-  box-shadow: 0 0 10px 5px rgba(100, 80, 190, 0.5);
+  box-shadow: 0 0 3px 1px rgba(100, 80, 190, 0.5);
 }
 </style>
