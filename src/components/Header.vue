@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="header-wrapper">
     Header
   </div>
 </template>
@@ -12,5 +12,8 @@ export default {
 </script>
 
 <style scoped>
-
+.header-wrapper {
+  margin-top: 60px;
+  margin-bottom: 60px;
+}
 </style>

@@ -84,15 +84,17 @@ export default {
 
 <style scoped>
 .card {
-  background-color: rgb(150, 40, 220);
   display: flex;
   flex-direction: row;
   margin: 5px 5px 0 5px;
   padding: 2px;
-  border: rgb(40, 0, 130) solid 3px;
+  border: rgb(200, 200, 200) solid 1px;
   border-radius: 4px;
   align-items: center;
   justify-content: space-between;
+
+  background-color: rgba(112, 59, 248, 0.7);
+  box-shadow: 0 3px 15px rgba(70, 35, 255, 0.7);
 }
 
 .card.collapsed {
@@ -152,15 +154,16 @@ export default {
 }
 
 .card-actions button {
-  background-color: skyblue;
+  background-color: rgb(47, 35, 80);
   border-radius: 4px;
   margin: 2px 0;
+  color: white;
 }
 
 /*  */
 .card:hover {
-  transform: scale(1.01);
-  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.5);
+  transform: scale(1.02);
+  box-shadow: 0px -3px 10px rgba(0, 0, 0, 0.5);
 }
 
 .card:hover .card-actions {
