@@ -1,5 +1,8 @@
 <template>
   <div class="slider-wrapper">
+    <div v-for="{ tasksArray, date } in cardsData" :key="date">
+      <div>date:{{ date }} array:{{ tasksArray }}</div>
+    </div>
     <swiper
       :slides-per-view="3"
       :space-between="0"
@@ -12,28 +15,16 @@
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['05.06.2021']" />
+      <swiper-slide
+        v-for="{ tasksArray, date, index } in cardsData"
+        :key="index"
+      >
+        <DayCardHandler :cardData="tasksArray" :date="date" />
       </swiper-slide>
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['06.06.2021']" />
-      </swiper-slide>
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['07.06.2021']" />
-      </swiper-slide>
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['08.06.2021']" />
-      </swiper-slide>
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['05.06.2021']" />
-      </swiper-slide>
-      <swiper-slide>
-        <DayCardHandler :cardsData="daysData['06.06.2021']" />
-      </swiper-slide>
-      <!-- <div class="swiper-pagination"></div> -->
     </swiper>
     <div class="swiper-btn-prev"></div>
     <div class="swiper-btn-next"></div>
+    <!-- <div> {{ getTasksByDate }} </div> -->
   </div>
 </template>
 
@@ -41,6 +32,7 @@
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import DayCardHandler from "@/components/DayCardHandler.vue";
+import { mapGetters } from "vuex";
 
 import "swiper/swiper.min.css";
 import "swiper/swiper.min.css";
@@ -58,25 +50,33 @@ export default {
   },
   data() {
     return {
-      // swiperOption: {
-      //   navigation: {
-      //     prevEl: ".swiper-button-prev",
-      //     nextEl: ".swiper-button-next",
-      //   },
-      // },
+      // cardsDataList: {},
     };
   },
   methods: {
-    onSwiper(swiper) {
-      console.log(swiper);
+    onSwiper() {
+      // console.log(swiper);
     },
     onSlideChange() {
       console.log("slide change");
     },
   },
-  props: ["daysData"],
-  computed: {},
-  mounted() {},
+  // props: ["daysData"],
+  computed: {
+    ...mapGetters("tasksStore", ["getTasksByDate"]),
+    cardsData() {
+      console.log("DaysSwiper.cardsData", this.getTasksByDate);
+      return this.getTasksByDate;
+    },
+  },
+  // created() {
+  //   this.cardsDataList = this.getTasksByDate;
+  //   console.log(this.cardsDataList);
+
+  //   for (let cd in this.cardsDataList) {
+  //     console.log("a", cd);
+  //   }
+  // },
 };
 </script>
 
@@ -96,7 +96,8 @@ export default {
   left: 0;
   right: auto;
   top: 10%;
-  bottom: 0;
+  bottom: auto;
+  height: 100%;
   width: 10%;
   background: linear-gradient(90deg, rgba(255 255 255 / 1) 50%, transparent);
 }

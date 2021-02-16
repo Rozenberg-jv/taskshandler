@@ -2,9 +2,7 @@
   <div class="card collapsed" @click="onCardClick">
     <!-- <MdCard @click.native="onItemClick" class="md-with-hover"> -->
 
-    <div class="card-image" :style="imageStyle">
-      <!-- <img :src="resolveImageUrl(cardData.imageUrl)" /> -->
-    </div>
+    <div class="card-image" :style="imageStyle"></div>
 
     <div class="card-title" v-if="!computeIsChecked">
       <p>{{ cardData.title }}</p>
@@ -22,9 +20,8 @@
 </template>
 
 <script>
-
 export default {
-  name: "DayCard",
+  name: "TaskCard",
   components: {},
   data() {
     return {
@@ -53,8 +50,8 @@ export default {
     },
   },
   props: {
-    cardData: {
-      imageUrl: { type: String },
+    taskData: {
+      imageName: { type: String },
       id: { type: Number, require: true },
       title: { type: String, require: false },
       text: { type: String, require: true },
@@ -63,13 +60,12 @@ export default {
   },
   computed: {
     imageStyle() {
-      // console.log(this.cardData.imageUrl);
       return {
         "background-image": this.imageUrl,
       };
     },
     imageUrl() {
-      let imageIs = this.cardData.imageUrl;
+      let imageIs = this.cardData.imageName;
 
       let image = this.resolveImageUrl(imageIs || this.defaultImageName);
 
