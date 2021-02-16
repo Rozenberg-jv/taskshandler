@@ -50,7 +50,7 @@ export default {
     },
   },
   props: {
-    taskData: {
+    cardData: {
       imageName: { type: String },
       id: { type: Number, require: true },
       title: { type: String, require: false },

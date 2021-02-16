@@ -3,6 +3,13 @@ const tasksStore = {
 
   state: {
     example_tasks: {
+      "5": {
+        id: 5,
+        title: "title5",
+        text:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
+        date: "07.06.2021"
+      },
       "1": {
         id: 1,
         title: "title1",
@@ -35,13 +42,6 @@ const tasksStore = {
       "4": {
         id: 4,
         title: "title4",
-        text:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
-        date: "07.06.2021"
-      },
-      "5": {
-        id: 5,
-        title: "title5",
         text:
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
         date: "07.06.2021"
@@ -108,18 +108,12 @@ const tasksStore = {
     }
   },
   getters: {
-    // getTasksByDate: function(store) {
-
-    //   console.log(store.example_tasks);
-
-    //   return store.example_tasks;
-    // }
     getTasksByDate: ({ example_tasks }) => {
-      console.log("gettasks");
+      // console.log("gettasks", example_tasks);
 
       const tasks = Object.values(example_tasks);
       // console.log(tasks);
-      let result = tasks.reduce((acc, item) => {
+      /* const result = tasks.reduce((acc, item) => {
         let date = item.date;
         if (acc[date]) {
           acc[date].push(item);
@@ -127,9 +121,32 @@ const tasksStore = {
           acc[date] = [item];
         }
         return acc;
-      }, {});
+      }, {}); */
+      const result = tasks.reduce((acc, item) => {
+        let date = item.date;
+        /* console.log(date);
+        console.log(item);
+        console.log(acc); */
+        if (!acc.has(date)) {
+          acc.set(date, [item]);
+        } else {
+          acc.get(date).push(item);
+        }
 
-      // console.log(result);
+        return acc;
+      }, new Map());
+
+      /* console.log("tasksStore.getTasksByDate.result", result);
+
+      const entries = Object.keys(result).map((date) => [
+        { [date]: result[date] }
+      ]);
+
+      console.log("tasksStore.getTasksByDate.entries", entries);
+
+      for (let item of entries) {
+        console.log(item);
+      } */
 
       return result;
     }
