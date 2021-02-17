@@ -1,7 +1,10 @@
+import { tasksRef } from "../../plugins/firebase";
+
 const tasksStore = {
   namespaced: true,
 
   state: {
+    taskList: {},
     example_tasks: {
       "5": {
         id: 5,
@@ -108,25 +111,33 @@ const tasksStore = {
     }
   },
   getters: {
-    getTasksByDate: ({ example_tasks }) => {
-      // console.log("gettasks", example_tasks);
+    // getTasksByDate: ({ example_tasks }) => {
+    //   const tasks = Object.values(example_tasks);
 
-      const tasks = Object.values(example_tasks);
-      // console.log(tasks);
-      /* const result = tasks.reduce((acc, item) => {
-        let date = item.date;
-        if (acc[date]) {
-          acc[date].push(item);
-        } else {
-          acc[date] = [item];
-        }
-        return acc;
-      }, {}); */
+    //   const result = tasks.reduce((acc, item) => {
+    //     let date = item.date;
+
+    //     if (!acc.has(date)) {
+    //       acc.set(date, [item]);
+    //     } else {
+    //       acc.get(date).push(item);
+    //     }
+
+    //     return acc;
+    //   }, new Map());
+
+    //   return result;
+    // },
+    // initTaskList: ({ taskList }) => {
+    //   const data = tasksRef.once("value");
+    //   this.taskList = data;
+    // }
+    getTasksByDate: ({ taskList }) => {
+      const tasks = Object.values(taskList);
+
       const result = tasks.reduce((acc, item) => {
         let date = item.date;
-        /* console.log(date);
-        console.log(item);
-        console.log(acc); */
+
         if (!acc.has(date)) {
           acc.set(date, [item]);
         } else {
@@ -136,19 +147,19 @@ const tasksStore = {
         return acc;
       }, new Map());
 
-      /* console.log("tasksStore.getTasksByDate.result", result);
-
-      const entries = Object.keys(result).map((date) => [
-        { [date]: result[date] }
-      ]);
-
-      console.log("tasksStore.getTasksByDate.entries", entries);
-
-      for (let item of entries) {
-        console.log(item);
-      } */
-
       return result;
+    },
+    initTaskList: () => {
+      console.log("try to init taskList");
+      tasksRef
+        .once("value")
+        .then((data) => {
+          this.taskList = data;
+          console.log(this.taskList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   },
   mutations: {},

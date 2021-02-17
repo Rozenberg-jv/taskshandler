@@ -84,13 +84,16 @@ export default {
   flex-direction: row;
   margin: 5px 5px 0 5px;
   padding: 2px;
-  border: rgb(200, 200, 200) solid 1px;
-  border-radius: 4px;
   align-items: center;
   justify-content: space-between;
 
-  background-color: rgba(112, 59, 248, 0.7);
-  box-shadow: 0 3px 15px rgba(70, 35, 255, 0.7);
+  /* background-color: rgba(112, 59, 248, 0.7); */
+  /* box-shadow: 0 3px 15px rgba(70, 35, 255, 0.7); */
+  border: rgb(0, 20, 50) solid 0;
+  border-radius: 10px;
+
+  background: no-repeat url("~@/assets/top_line_bg_blue.png");
+  background-size: 100%;
 }
 
 .card.collapsed {
@@ -103,11 +106,13 @@ export default {
 
 .card-image {
   display: flex;
-  min-height: 50px;
-  min-width: 50px;
+  min-height: 30px;
+  min-width: 30px;
   max-height: inherit;
   justify-content: center;
   align-items: center;
+  margin-left: 10px;
+  margin-top: 10px;
   /* overflow: hidden; */
   /* position: relative; */
   background-repeat: no-repeat;
