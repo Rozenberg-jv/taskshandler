@@ -153,7 +153,7 @@ const tasksStore = {
   mutations: {
     SET_FULL_TASKS(state, tasks) {
       state.taskList = tasks;
-      console.log(state.taskList);
+      // console.log(state.taskList);
     },
     ADD_NEW_TASK({ taskList }, task) {
       taskList[task.id] = task;

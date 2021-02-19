@@ -81,7 +81,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(90deg, rgba(0 20 50 / 1) 50%, transparent);
+  background: linear-gradient(90deg, rgba(30 60 100 / 1) 50%, transparent);
 }
 
 /* fade effect right */
@@ -95,7 +95,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(-90deg, rgba(0 20 50 / 1) 50%, transparent);
+  background: linear-gradient(-90deg, rgba(30 60 100 / 1) 50%, transparent);
   /* background: linear-gradient(-90deg, rgba(255 255 255 / 1) 50%, transparent); */
 }
 
