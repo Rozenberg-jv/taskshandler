@@ -93,7 +93,7 @@ export default {
   border-radius: 1px;
 
   /* background: no-repeat url("~@/assets/top_line_bg_blue.png"); */
-  background-color: rgba(57, 56, 66, 0.9);
+  background-color: rgba(50, 50, 70, 0.9);
   background-size: 100%;
 }
 
@@ -165,7 +165,8 @@ export default {
 /*  */
 .card:hover {
   transform: scale(1.02);
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 10px rgba(170, 170, 255, 0.8);
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8); */
 }
 
 .card:hover .card-actions {

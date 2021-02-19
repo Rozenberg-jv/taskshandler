@@ -1,4 +1,4 @@
-import { tasksRef } from "../../plugins/firebase";
+import { tasksRootRef } from "../../plugins/firebase";
 
 const tasksStore = {
   namespaced: true,
@@ -129,7 +129,7 @@ const tasksStore = {
     //   return result;
     // },
     // initTaskList: ({ taskList }) => {
-    //   const data = tasksRef.once("value");
+    //   const data = tasksRooRef.once("value");
     //   this.taskList = data;
     // }
     getTasksByDate: ({ taskList }) => {
@@ -154,17 +154,32 @@ const tasksStore = {
     SET_FULL_TASKS(state, tasks) {
       state.taskList = tasks;
       console.log(state.taskList);
+    },
+    ADD_NEW_TASK({ taskList }, task) {
+      taskList[task.id] = task;
     }
   },
   actions: {
     initTaskList({ commit }) {
-      console.log("try to init taskList");
-      tasksRef
+      tasksRootRef
         .get()
         .then((data) => {
           const tasks = data.val();
-          console.log(tasks);
           commit("SET_FULL_TASKS", tasks);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    addNewTask({ commit }, task) {
+      console.log(task);
+
+      const newTaskRef = tasksRootRef.child(task.id);
+
+      newTaskRef
+        .set(task)
+        .then(() => {
+          commit("ADD_NEW_TASK", task);
         })
         .catch((error) => {
           console.log(error);

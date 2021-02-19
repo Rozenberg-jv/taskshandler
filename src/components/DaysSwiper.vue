@@ -58,7 +58,6 @@ export default {
   },
   created() {
     this.initTaskList();
-    // this.getTasksByDate();
   },
 };
 </script>

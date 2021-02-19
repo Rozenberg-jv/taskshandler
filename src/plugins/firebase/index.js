@@ -1,5 +1,5 @@
 import firebase from "firebase/app";
-import 'firebase/database';
+import "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtp3dNUlK1hSXn1ClSymJ53DIEUImO-Yw",
@@ -14,4 +14,4 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-export const tasksRef = firebase.database().ref("example_tasks");
+export const tasksRootRef = firebase.database().ref("example_tasks");
