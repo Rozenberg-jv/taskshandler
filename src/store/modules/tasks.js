@@ -148,22 +148,29 @@ const tasksStore = {
       }, new Map());
 
       return result;
-    },
-    initTaskList: () => {
+    }
+  },
+  mutations: {
+    SET_FULL_TASKS(state, tasks) {
+      state.taskList = tasks;
+      console.log(state.taskList);
+    }
+  },
+  actions: {
+    initTaskList({ commit }) {
       console.log("try to init taskList");
       tasksRef
-        .once("value")
+        .get()
         .then((data) => {
-          this.taskList = data;
-          console.log(this.taskList);
+          const tasks = data.val();
+          console.log(tasks);
+          commit("SET_FULL_TASKS", tasks);
         })
         .catch((error) => {
           console.log(error);
         });
     }
-  },
-  mutations: {},
-  actions: {}
+  }
 };
 
 export default tasksStore;

@@ -1,4 +1,5 @@
-import firebase from "@firebase/app";
+import firebase from "firebase/app";
+import 'firebase/database';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtp3dNUlK1hSXn1ClSymJ53DIEUImO-Yw",
@@ -11,10 +12,6 @@ const firebaseConfig = {
   appId: "1:343961256486:web:35ba32df66027ba6891ce7"
 };
 
-// const app = initializeApp(firebaseConfig);
-// const db = app.database();
+firebase.initializeApp(firebaseConfig);
 
-const db = firebase.initializeApp(firebaseConfig).database();
-
-// export const db = initializeApp(firebaseConfig).database();
-export const tasksRef = db.ref("example_tasks");
+export const tasksRef = firebase.database().ref("example_tasks");

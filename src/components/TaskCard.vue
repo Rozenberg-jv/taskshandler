@@ -90,9 +90,10 @@ export default {
   /* background-color: rgba(112, 59, 248, 0.7); */
   /* box-shadow: 0 3px 15px rgba(70, 35, 255, 0.7); */
   border: rgb(0, 20, 50) solid 0;
-  border-radius: 10px;
+  border-radius: 1px;
 
-  background: no-repeat url("~@/assets/top_line_bg_blue.png");
+  /* background: no-repeat url("~@/assets/top_line_bg_blue.png"); */
+  background-color: rgba(57, 56, 66, 0.9);
   background-size: 100%;
 }
 

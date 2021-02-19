@@ -25,7 +25,7 @@
 import SwiperCore, { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import DayCardHandler from "@/components/DayCardHandler.vue";
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 import "swiper/swiper.min.css";
 import "swiper/swiper.min.css";
@@ -51,12 +51,14 @@ export default {
     onSlideChange() {
       // console.log("slide change");
     },
+    ...mapActions("tasksStore", ["initTaskList"]),
   },
   computed: {
     ...mapGetters("tasksStore", ["getTasksByDate"]),
   },
-  mounted() {
-    mapGetters("tasksStore", ["initTaskList"]);
+  created() {
+    this.initTaskList();
+    // this.getTasksByDate();
   },
 };
 </script>
