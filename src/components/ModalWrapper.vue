@@ -1,6 +1,7 @@
 <template>
   <div id="testmodal" v-if="isVisible">
     <div class="modal-box">
+      
       <button class="close-modal-button" v-on:click="closeModal">X</button>
     </div>
   </div>
@@ -10,7 +11,7 @@
   export default {
     data() {
       return {
-        visible: true
+        visible: false
       };
     },
     methods: {

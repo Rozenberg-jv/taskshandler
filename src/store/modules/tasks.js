@@ -1,11 +1,12 @@
 import { tasksRootRef } from "../../plugins/firebase";
+import moment from 'moment';
 
 const tasksStore = {
   namespaced: true,
 
   state: {
-    taskList: {},
-    example_tasks: {
+    taskList: {}
+    /*example_tasks: {
       "5": {
         id: 5,
         title: "title5",
@@ -108,7 +109,7 @@ const tasksStore = {
           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
         date: "10.06.2021"
       }
-    }
+    }*/
   },
   getters: {
     // getTasksByDate: ({ example_tasks }) => {
@@ -135,8 +136,8 @@ const tasksStore = {
     getTasksByDate: ({ taskList }) => {
       const tasks = Object.values(taskList);
 
-      const result = tasks.reduce((acc, item) => {
-        let date = item.date;
+      const result = tasks.reduce(function(acc, item) {
+        let date = moment.unix(item.date).format("DD-MM-YYYY");
 
         if (!acc.has(date)) {
           acc.set(date, [item]);
@@ -172,8 +173,6 @@ const tasksStore = {
         });
     },
     addNewTask({ commit }, task) {
-      console.log(task);
-
       const newTaskRef = tasksRootRef.child(task.id);
 
       newTaskRef

@@ -31,6 +31,7 @@
         let modal = this.$refs.modal;
         // console.log(modal);
         modal.openModal();
+        console.log("modal");
       }
     },
     mounted() {}

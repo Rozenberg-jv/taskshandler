@@ -1,6 +1,6 @@
 <template>
   <div class="day-cards-handler">
-    <div class="header">{{ date }}</div>
+    <div class="header">{{ headerDate }}</div>
     <TaskCard
       v-for="(taskData, index) in taskArray"
       :key="index"
@@ -17,8 +17,13 @@ export default {
   components: {
     TaskCard,
   },
-  computed: {},
   props: { taskArray: Array, date: String },
+  computed: {
+    headerDate: function () {
+      return this.date;
+      // return this.$moment.unix(this.date).format("DD-MM-YYYY");
+    },
+  },
 };
 </script>
 

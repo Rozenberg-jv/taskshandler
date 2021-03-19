@@ -12,7 +12,7 @@
       @swiper="onSwiper"
       @slideChange="onSlideChange"
     >
-      <swiper-slide v-for="[date, taskArray] in getTasksByDate" :key="date">
+      <swiper-slide v-for="[date, taskArray] in tasksByDate" :key="date">
         <DayCardHandler :taskArray="taskArray" :date="date" />
       </swiper-slide>
     </swiper>
@@ -52,9 +52,14 @@ export default {
       // console.log("slide change");
     },
     ...mapActions("tasksStore", ["initTaskList"]),
+    ...mapGetters("tasksStore", ["getTasksByDate"])
   },
   computed: {
-    ...mapGetters("tasksStore", ["getTasksByDate"]),
+    tasksByDate: function() {
+      const t = this.getTasksByDate();
+      console.log(t);
+      return t;
+    }
   },
   created() {
     this.initTaskList();

@@ -9,7 +9,13 @@
     </div>
 
     <div class="card-content" v-else>
-      <p>{{ cardData.text }}</p>
+      <div>
+        <p>{{ dateComputed }}</p>
+      </div>
+      <br />
+      <div>
+        <p>{{ cardData.text }}</p>
+      </div>
     </div>
 
     <div class="card-actions">
@@ -55,7 +61,7 @@ export default {
       id: { type: Number, require: true },
       title: { type: String, require: false },
       text: { type: String, require: true },
-      date: { type: String, require: true },
+      date: { type: Number, require: true },
     },
   },
   computed: {
@@ -73,6 +79,9 @@ export default {
     },
     computeIsChecked() {
       return this.isChecked;
+    },
+    dateComputed() {
+      return this.$moment.unix(this.cardData.date).utc().format("LLLL");
     },
   },
 };
@@ -128,6 +137,7 @@ export default {
 
 .card-content {
   display: flex;
+  flex-direction: column;
   height: inherit;
   margin: 0 5px;
   overflow: hidden;

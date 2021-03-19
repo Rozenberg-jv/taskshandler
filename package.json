@@ -11,8 +11,10 @@
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
     "firebase": "^8.2.7",
+    "moment": "^2.29.1",
     "swiper": "^6.4.10",
     "vue": "^3.0.0",
+    "vue-moment": "^4.1.0",
     "vue-router": "^4.0.3",
     "vuex": "^4.0.0"
   },
@@ -38,7 +40,9 @@
     "parserOptions": {
       "parser": "babel-eslint"
     },
-    "rules": {}
+    "rules": {
+      "no-unused-vars": "off"
+    }
   },
   "browserslist": [
     "> 1%",
