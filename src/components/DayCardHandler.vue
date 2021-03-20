@@ -20,8 +20,8 @@ export default {
   props: { taskArray: Array, date: String },
   computed: {
     headerDate: function () {
-      return this.date;
-      // return this.$moment.unix(this.date).format("DD-MM-YYYY");
+      // return this.date;
+      return this.$moment(this.date).format("DD-MM-YYYY");
     },
   },
 };

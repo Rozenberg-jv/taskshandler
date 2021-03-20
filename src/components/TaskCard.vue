@@ -81,7 +81,7 @@ export default {
       return this.isChecked;
     },
     dateComputed() {
-      return this.$moment.unix(this.cardData.date).utc().format("LLLL");
+      return this.$moment.unix(this.cardData.date).format("LLLL");
     },
   },
 };

@@ -6,7 +6,7 @@
     <DaysSwiper />
   </div>
   <!-- <div class="modal-full-screen"> -->
-  <ModalWrapper ref="modal" />
+  <ModalWrapper ref="modal" @newTaskSubmit="onNewTaskSubmit" />
   <!-- </div> -->
   <!-- </div> -->
 </template>
@@ -15,6 +15,7 @@
   import DaysSwiper from "./components/DaysSwiper.vue";
   import Header from "./components/Header.vue";
   import ModalWrapper from "./components/ModalWrapper.vue";
+  import { mapActions } from "vuex";
 
   export default {
     name: "App",
@@ -32,6 +33,11 @@
         // console.log(modal);
         modal.openModal();
         console.log("modal");
+      },
+      ...mapActions("tasksStore", ["addNewTask"]),
+      onNewTaskSubmit(newTask) {
+        newTask.date = this.$moment(newTask.date, "DD-MM-YYYY").unix();
+        this.addNewTask(newTask);
       }
     },
     mounted() {}

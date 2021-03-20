@@ -1,5 +1,6 @@
 import { tasksRootRef } from "../../plugins/firebase";
-import moment from 'moment';
+import moment from "moment";
+import { v4 as uuid } from "uuid";
 
 const tasksStore = {
   namespaced: true,
@@ -136,8 +137,9 @@ const tasksStore = {
     getTasksByDate: ({ taskList }) => {
       const tasks = Object.values(taskList);
 
-      const result = tasks.reduce(function(acc, item) {
-        let date = moment.unix(item.date).format("DD-MM-YYYY");
+      const map = tasks.reduce(function(acc, item) {
+        let date = moment.unix(item.date).format("YYYY-MM-DD");
+        // const date = new Date(item.date * 1000).toDateString();
 
         if (!acc.has(date)) {
           acc.set(date, [item]);
@@ -147,6 +149,14 @@ const tasksStore = {
 
         return acc;
       }, new Map());
+
+      const result = new Map(
+        [...map.entries()].sort(
+          (e1, e2) => moment(e1[0]).unix() - moment(e2[0]).unix()
+        )
+      );
+      console.log([...map.entries()]);
+      console.log([...result.entries()]);
 
       return result;
     }
@@ -173,7 +183,7 @@ const tasksStore = {
         });
     },
     addNewTask({ commit }, task) {
-      const newTaskRef = tasksRootRef.child(task.id);
+      const newTaskRef = tasksRootRef.child(uuid());
 
       newTaskRef
         .set(task)

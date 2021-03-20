@@ -2,7 +2,7 @@
   <div class="header-wrapper">
     <p>Header</p>
     <button class="testbutton" v-on:click="openAddTaskModal">
-      Add test task
+      Add new task
     </button>
   </div>
 </template>
@@ -49,7 +49,26 @@
     justify-content: space-evenly;
   }
 
-  button .testbutton {
+  .testbutton {
     width: 100px;
+    color: darkblue;
+    font-weight: 900;
+    background-color: forestgreen;
+    box-shadow: 0;
+    border: 0;
+    border-radius: 24px;
+    box-shadow: 0 0 1px 1px rgb(34, 134, 34);
+  }
+
+  .testbutton:hover {
+    color: rgb(220, 220, 220);
+    box-shadow: 0 0 2px 2px rgb(220, 220, 220);
+  }
+
+  .testbutton:focus {
+    outline: 0;
+    background-color: rgb(64, 194, 64);
+    box-shadow: 0 0 2px 2px rgb(0, 0, 0);
+    /* background-color: rgb(34, 104, 34); */
   }
 </style>
