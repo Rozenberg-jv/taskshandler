@@ -16,12 +16,14 @@
           rows="15"
           wrap="hard"
         />
-        <input
-          type="text"
-          id="date"
+        <date-picker
           v-model="newTask.date"
-          placeholder="date"
-        />
+          :value="newTask.date"
+          :is-dark="dpSetting.isDark"
+          :color="dpSetting.color"
+          :trim-weeks="dpSetting.trimWeeks"
+          @dayclick="onDayClick"
+        ></date-picker>
         <button class="submit-button" v-on:click="submit">Submit</button>
       </div>
       <button class="close-modal-button" v-on:click="closeModal">X</button>
@@ -30,6 +32,8 @@
 </template>
 
 <script>
+  import { DatePicker } from "v-calendar";
+
   export default {
     data() {
       return {
@@ -38,8 +42,16 @@
           title: "",
           text: "",
           date: this.$moment().format("DD-MM-YYYY")
+        },
+        dpSetting: {
+          isDark: true,
+          color: "green",
+          trimWeeks: true
         }
       };
+    },
+    components: {
+      DatePicker
     },
     methods: {
       closeModal() {
@@ -56,9 +68,13 @@
         this.newTask = {
           title: "",
           text: "",
-          date: this.$moment().format("DD-MM-YYYY")
+          date: new Date()
+          // date: this.$moment().format("DD-MM-YYYY")
         };
         this.closeModal();
+      },
+      onDayClick(day) {
+        console.log("dayClick", day);
       }
     },
     computed: {
@@ -127,7 +143,7 @@
   }
 
   .submit-button {
-    margin-bottom: 8px;
+    margin: 8px;
     width: 15%;
     height: 10%;
   }
