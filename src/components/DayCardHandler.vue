@@ -45,7 +45,7 @@ export default {
   /* padding-bottom: 5px; */
   margin: 10px 10px;
 
-  background: no-repeat url("~@/assets/top_line_bg_bluegray.png");
+  background: no-repeat url("~@/assets/top_line_bg_blue.png");
   background-size: 100%;
   /* background: linear-gradient(135deg, rgb(185, 140, 221), rgb(144, 133, 245)); */
 

@@ -1,14 +1,9 @@
 <template>
-  <!-- <div id="app"> -->
   <div class="main-wrapper">
     <Header />
-    <!-- <DaysSwiper :daysData="reduceDaysDataByDate(mockCardsData)" /> -->
     <DaysSwiper />
   </div>
-  <!-- <div class="modal-full-screen"> -->
   <ModalWrapper ref="modal" @newTaskSubmit="onNewTaskSubmit" />
-  <!-- </div> -->
-  <!-- </div> -->
 </template>
 
 <script>
