@@ -86,7 +86,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(90deg, rgba(30 60 100 / 1) 50%, transparent);
+  background: linear-gradient(90deg, rgba(220 220 240 / 1) 50%, transparent);
 }
 
 /* fade effect right */
@@ -100,7 +100,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(-90deg, rgba(30 60 100 / 1) 50%, transparent);
+  background: linear-gradient(-90deg, rgba(220 220 240 / 1) 50%, transparent);
   /* background: linear-gradient(-90deg, rgba(255 255 255 / 1) 50%, transparent); */
 }
 
@@ -111,7 +111,7 @@ export default {
   top: 10%;
   height: 80%;
   width: 120px;
-  background: center no-repeat url("~@/assets/leftarrow_white.png");
+  background: center no-repeat url("~@/assets/leftarrow.png");
   background-size: contain;
   z-index: 999;
 }
@@ -123,7 +123,7 @@ export default {
   top: 10%;
   height: 80%;
   width: 120px;
-  background: center no-repeat url("~@/assets/rightarrow_white.png");
+  background: center no-repeat url("~@/assets/rightarrow.png");
   background-size: contain;
   z-index: 999;
 }

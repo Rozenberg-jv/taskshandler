@@ -2,25 +2,34 @@
   <div class="card collapsed" @click="onCardClick">
     <!-- <MdCard @click.native="onItemClick" class="md-with-hover"> -->
 
-    <div class="card-image" :style="imageStyle"></div>
-
-    <div class="card-title" v-if="!computeIsChecked">
-      <p>{{ cardData.title }}</p>
+    <div class="card-block left">
+      <div class="card-image"><img :src="imageUrl2" alt="type-image" /></div>
+      <!-- <div class="card-image" :style="imageStyle"></div> -->
     </div>
-
-    <div class="card-content" v-else>
-      <div>
-        <p>{{ dateComputed }}</p>
+    <div class="card-block center">
+      <div class="card-title">
+        <p>{{ cardData.title }}</p>
       </div>
-      <br />
-      <div>
-        <p>{{ cardData.text }}</p>
+
+      <div class="card-content" v-if="computeIsChecked">
+        <div>
+          <p>{{ dateComputed }}</p>
+        </div>
+        <br />
+        <div>
+          <p>{{ cardData.text }}</p>
+        </div>
       </div>
     </div>
-
-    <div class="card-actions">
-      <button @click="onAction1Click">Action1</button>
-      <button @click="onAction2Click">Action2</button>
+    <div class="card-block right">
+      <div class="card-actions">
+        <button @click="onRemoveClick">
+          <img src="/icons_dark/trashcan-64.png" />
+        </button>
+        <button @click="onAction2Click"></button>
+        <button></button>
+        <button></button>
+      </div>
     </div>
   </div>
 </template>
@@ -37,7 +46,7 @@ export default {
   },
   methods: {
     // action handlers
-    onAction1Click(e) {
+    onRemoveClick(e) {
       e.stopPropagation();
     },
     onAction2Click(e) {
@@ -77,6 +86,12 @@ export default {
 
       return `url(${image})`;
     },
+    imageUrl2() {
+      let imageIs = this.cardData.imageName;
+      let image = this.resolveImageUrl(imageIs || this.defaultImageName);
+
+      return image;
+    },
     computeIsChecked() {
       return this.isChecked;
     },
@@ -98,41 +113,100 @@ export default {
 
   /* background-color: rgba(112, 59, 248, 0.7); */
   /* box-shadow: 0 3px 15px rgba(70, 35, 255, 0.7); */
-  border: rgb(0, 20, 50) solid 0;
-  border-radius: 12px 1px 1px 1px;
+  /* border: 2px rgb(0, 20, 50) solid; */
+  border-radius: 12px 12px 12px 12px;
 
   /* background: no-repeat url("~@/assets/top_line_bg_blue.png"); */
-  background-color: rgba(50, 50, 70, 0.9);
+  background-color: #c0c0c0e6;
   background-size: 100%;
+
+  box-shadow: 0 2px 2px 2px black;
+}
+
+.card:hover {
+  /* transform: scale(1.01); */
+  /* box-shadow: 0 0 10px 0 rgba(170, 170, 255, 0.8); */
+  /* border: 2px rgb(0, 20, 50) solid; */
+  border: 3px #fff solid;
+  box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.8);
 }
 
 .card.collapsed {
   height: 50px;
+  transition: all 0.2s 0s ease;
 }
 
 .card.expanded {
   height: 200px;
+  transition: all 0.4s 0.05s ease;
+}
+
+.card-block {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  margin: 4px;
+}
+
+.card-block.left {
+  justify-content: baseline;
+  align-items: center;
+  margin-top: 12px;
+}
+
+.card-block.center {
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: center;
+  flex-grow: 1;
+  color: brown;
+}
+
+.card-block.right {
+  display: flex;
+  flex-direction: column;
+  max-width: 64px;
+  min-width: 64px;
 }
 
 .card-image {
   display: flex;
-  min-height: 30px;
-  min-width: 30px;
-  max-height: inherit;
+  min-height: 40px;
+  min-width: 40px;
+  max-height: 40px;
+  max-width: 40px;
   justify-content: center;
   align-items: center;
-  margin-left: 10px;
-  margin-top: 10px;
+  /* margin-left: 4px;
+  margin-top: 4px; */
+
+  background-color: #ddd;
   /* overflow: hidden; */
   /* position: relative; */
-  background-repeat: no-repeat;
+  /* background-repeat: no-repeat;
   background-position: 0 0;
-  background-size: cover;
+  background-size: cover; */
+
+  border: 2px solid #00000044;
+  border-radius: 12px;
+}
+
+.card-image img {
+  min-height: 32px;
+  min-width: 32px;
+  max-height: 32px;
+  max-width: 32px;
+  display: flex;
 }
 
 .card-title {
-  display: flex;
-  margin: 0 5px;
+  margin: 4px 4px;
+  background-color: #ddd;
+  border-radius: 8px;
+  width: 100%;
+  max-height: 44px;
+  min-height: 44px;
 }
 
 .card-content {
@@ -143,6 +217,7 @@ export default {
   overflow: hidden;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .card-content p {
@@ -152,41 +227,67 @@ export default {
 }
 
 .card-actions {
-  right: 0;
-  margin-right: -2px;
+  /* right: 0; */
+  /* margin-right: -2px; */
   display: flex;
-  flex-direction: column;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  /* flex-direction: column; */
+  /* flex-wrap: wrap; */
   padding: 0;
-  justify-content: center;
-  align-items: stretch;
+  justify-content: space-around;
+  align-items: flex-start;
 
-  opacity: 0;
-  transition: all 0.3s 0.2s ease;
-  transform: translateX(1000%);
+  /* opacity: 0; */
+  /* transition: all 0.3s 0.2s ease; */
+  /* transform: translateX(1000%); */
 }
 
 .card-actions button {
-  background-color: rgb(47, 35, 80);
-  border-radius: 4px;
-  margin: 2px 0;
+  background-color: #afafaf;
+  height: 28px;
+  width: 28px;
+  border-radius: 14px;
+  /* border: 2px solid #ddd; */
+  /* margin: 4px 0; */
   color: white;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hide;
+  /* box-shadow: 0 0 1px 1px #000; */
+}
+
+.card-actions button:hover {
+  border: 2px solid #fff;
+  background-color: #3e8e41;
+}
+
+.card-actions button img {
+  height: 18px;
+  width: 18px;
 }
 
 /*  */
-.card:hover {
-  transform: scale(1.02);
-  box-shadow: 0px 0px 10px rgba(170, 170, 255, 0.8);
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.8); */
-}
 
-.card:hover .card-actions {
+/* .card:hover .card-actions {
   color: black;
   opacity: 1;
   transform: translateX(0);
-}
+} */
 
 .card-actions button:active,
 .card-actions button:focus {
   outline: none;
+  /* border-radius: 7px; */
+  /* border: 3px solid #000;  */
+}
+
+.card-actions button:active {
+  background-color: #f66;
+  transform: scale(0.93);
+  border-radius: 7px;
+  border: 3px solid #fff;
 }
 </style>

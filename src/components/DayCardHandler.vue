@@ -31,6 +31,7 @@ export default {
 .header {
   margin-top: 15px;
   font-weight: bold;
+  color: darkblue;
 }
 
 .day-cards-handler {
