@@ -57,7 +57,6 @@ export default {
   computed: {
     tasksByDate: function() {
       const t = this.getTasksByDate();
-      console.log(t);
       return t;
     }
   },
@@ -86,7 +85,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(90deg, rgba(220 220 240 / 1) 50%, transparent);
+  background: linear-gradient(90deg, rgba(70 70 120 / 1) 50%, transparent);
 }
 
 /* fade effect right */
@@ -100,7 +99,7 @@ export default {
   bottom: auto;
   height: 100%;
   width: 10%;
-  background: linear-gradient(-90deg, rgba(220 220 240 / 1) 50%, transparent);
+  background: linear-gradient(-90deg, rgba(70 70 120 / 1) 50%, transparent);
   /* background: linear-gradient(-90deg, rgba(255 255 255 / 1) 50%, transparent); */
 }
 
@@ -140,7 +139,7 @@ export default {
 
 .swiper-btn-prev.swiper-button-disabled,
 .swiper-btn-next.swiper-button-disabled {
-  opacity: 0.5;
+  opacity: 0.3;
 }
 
 /* native swiper's */

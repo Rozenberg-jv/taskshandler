@@ -25,9 +25,7 @@
     methods: {
       openModal: function() {
         let modal = this.$refs.modal;
-        // console.log(modal);
         modal.openModal();
-        console.log("modal");
       },
       ...mapActions("tasksStore", ["addNewTask"]),
       onNewTaskSubmit(newTask) {
@@ -69,5 +67,10 @@
     top: 0;
     left: 0;
     bottom: 0;
+  }
+
+  button:active,
+  button:focus {
+    outline: 0;
   }
 </style>

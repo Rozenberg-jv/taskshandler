@@ -1,8 +1,8 @@
 <template>
   <div class="header-wrapper">
     <p>Header</p>
-    <button class="testbutton" v-on:click="openAddTaskModal">
-      Add new task
+    <button class="add-task-button" v-on:click="openAddTaskModal">
+      <img src="/icons_dark/plus-128.png" />
     </button>
   </div>
 </template>
@@ -26,10 +26,7 @@
     methods: {
       ...mapActions("tasksStore", ["addNewTask"]),
       openAddTaskModal() {
-        // console.log(this.$root);
         this.$root.openModal();
-
-        // this.addNewTask(task);
       },
       generateExampleTask() {
         this.exampleTask.id = this.exampleTask.id + 1;
@@ -49,26 +46,31 @@
     justify-content: space-evenly;
   }
 
-  .testbutton {
+  .add-task-button {
     width: 100px;
-    color: darkblue;
-    font-weight: 900;
-    background-color: forestgreen;
-    box-shadow: 0;
+    height: 100px;
+    background: 0;
     border: 0;
-    border-radius: 24px;
-    box-shadow: 0 0 1px 1px rgb(34, 134, 34);
+    border-radius: 50px;
+    padding: 4px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-
-  .testbutton:hover {
-    color: rgb(220, 220, 220);
+  .add-task-button img {
+    height: 100%;
+    width: 100%;
+  }
+  .add-task-button:hover {
+    border: 2px solid #fff;
     box-shadow: 0 0 2px 2px rgb(220, 220, 220);
   }
-
-  .testbutton:focus {
-    outline: 0;
-    background-color: rgb(64, 194, 64);
-    box-shadow: 0 0 2px 2px rgb(0, 0, 0);
-    /* background-color: rgb(34, 104, 34); */
+  /* .add-task-button:focus {
+    border: 2px solid #fff;
+  } */
+  .add-task-button:active {
+    transform: scale(0.93);
+    border-radius: 25px;
+    border: 3px solid #fff;
   }
 </style>
