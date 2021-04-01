@@ -60,7 +60,10 @@
       // action handlers
       onRemoveClick(id, e) {
         e.stopPropagation();
-        this.removeTask(id);
+        // console.log(this.$root); // for future custom confirm modal
+        if (confirm("are you sure?")) {
+          this.removeTask(id);
+        }
       },
       onAction2Click(e) {
         e.stopPropagation();

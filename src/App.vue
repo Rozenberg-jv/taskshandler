@@ -70,7 +70,9 @@
   }
 
   button:active,
-  button:focus {
+  button:focus,
+  input:focus,
+  textarea {
     outline: 0;
   }
 </style>
