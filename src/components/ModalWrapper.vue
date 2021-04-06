@@ -11,7 +11,14 @@
     </div>
     <div class="modal-box">
       <!-- <div class="input-area"> -->
-      <div class="image-picker"></div>
+      <div class="left-box">
+        <div class="image-picker-box">
+          <img id="image" src="/task_icon/task01.png" />
+        </div>
+        <div class="type-pick-button">
+          <button v-on:click="typePicker">Set type</button>
+        </div>
+      </div>
       <div class="title">
         <input
           type="text"
@@ -30,25 +37,14 @@
           wrap="hard"
         />
       </div>
-      <div class="date-button">
-        <button v-on:click="datePickerToggle">
-          Set date
-        </button>
-      </div>
       <div class="submit-button">
         <button id="submit-button" v-on:click="submit">
           Submit
         </button>
       </div>
-      <div class="close-modal-button">
-        <button
-          id="close-modal-button"
-          class="close-modal-button"
-          v-on:click="closeModal"
-        >
-          <img src="/icons_dark/close-64.png" />
-        </button>
-      </div>
+      <button id="close-modal-button" v-on:click="closeModal">
+        <img src="/icons_dark/close-64.png" />
+      </button>
     </div>
     <!-- </div> -->
   </div>
@@ -71,8 +67,7 @@
           isDark: true,
           color: "green",
           trimWeeks: true
-        },
-        datePickerShown: false
+        }
       };
     },
     components: {
@@ -97,19 +92,16 @@
       },
       onDayClick(day) {
         console.log("dayClick", day);
-      },
-      datePickerToggle() {
+      }
+      /* datePickerToggle() {
         this.datePickerShown = !this.datePickerShown;
         console.log("datePickerShown", this.datePickerShown);
         console.log("datePickerShow", this.datePickerShow);
-      }
+      } */
     },
     computed: {
       isVisible: function() {
         return this.visible;
-      },
-      datePickerShow() {
-        return this.datePickerShown;
       }
     }
   };
@@ -128,133 +120,122 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 9990;
+
+    font: bold "Georgia";
   }
-
-  .date-picker {
-    position: absolute;
-    text-align: center;
-    left: 13%;
-    transition: 0.5s ease;
-    transform: scale(10);
-    opacity: 0;
-  }
-
-  .date-picker.shown {
-    opacity: 1;
-    transition: 0.2s ease;
-    transform: scale(1);
-  }
-
-  .modal-box {
-    display: grid;
-    /* position: relative; */
-    height: 60%;
-    width: 40%;
-    background-color: #a6a6a8e6;
-    z-index: 9999;
-
-    border-radius: 8px;
-    border: 2px solid #ffff;
-    /* box-shadow: 0 0 10px 4px #ffffffaa; */
-    box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.4);
-
-    justify-items: center;
-    align-items: center;
-    grid-template-columns: repeat(18, 1fr);
-    grid-template-rows: repeat(18, 1fr);
-    grid-template-areas:
-      ".   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   cls "
-      ".   imp imp .   ttl ttl ttl ttl ttl ttl ttl ttl ttl ttl ttl ttl .   .   "
-      ".   imp imp .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   imp imp .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   txt txt txt txt txt txt txt txt txt txt txt txt .   .   "
-      ".   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   .   .   .   .   .    .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   .   .   .   .   .    .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   .   .   .   .   .    .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   .   .   .   .   .    .   .   .   .   .   .   .   .   .   .   .   .   "
-      ".   .   .   .   .   .    .   .   .   .   .   .   .   .   .   .   .   .   "
-      "dtb dtb .   .   .   .   .   .   .   .   .   .   .   .   .   .   sbm sbm "
-      "dtb dtb .   .   .   .   .   .   .   .   .   .   .   .   .   .   sbm sbm ";
-  }
-  /* imp ttl txt dtb sbm cls */
 
   input,
   textarea,
   button {
-    width: 100%;
-    height: 100%;
+    margin: 0;
+    padding: 0;
   }
 
-  .image-picker {
-    grid-area: imp;
-    width: 100%;
-    height: 100%;
-    background-color: #dddd;
-    border-radius: 16px;
+  button {
+    background: 0;
+    border: 0;
+    font: 1.2em bolder Georgia;
+  }
+
+  button:hover {
+    border: 2px solid #fff;
+    box-shadow: 0 0 2px 2px rgb(220, 220, 220);
+  }
+
+  /* date picker */
+  .date-picker {
+    position: absolute;
+    text-align: center;
+    left: 13%;
+  }
+
+  .vc-container.vc-is-dark {
+    background-color: #555555e6;
+  }
+
+  /* main box */
+  .modal-box {
+    display: flex;
+    position: relative;
+    height: 60%;
+    width: 40%;
+    background-color: #555555e6;
+    z-index: 9999;
+
+    border-radius: 8px;
+    border: 2px solid #ffff;
+    box-shadow: 0 2px 4px 4px #00000066;
+  }
+
+  /* left box */
+  .left-box {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .type-pick-button {
+    
+  }
+
+  /* image picker */
+  .image-picker-box {
+    background-color: #bbba;
+    border-radius: 12px;
+
+    height: 96px;
+    margin: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .image-picker-box #image {
+    width: 64px;
+    height: 64px;
   }
 
   .title {
-    grid-area: ttl;
-    width: 90%;
-    height: 90%;
   }
   #title {
-    /* align-items: center; */
     text-align: center;
     padding: 0;
   }
 
   .text {
-    width: 100%;
-    height: 100%;
-    grid-area: txt;
   }
   #text {
     resize: none;
   }
 
   .date-button {
-    grid-area: dtb;
-    width: 100%;
-    height: 100%;
   }
 
   .submit-button {
-    width: 100%;
-    height: 100%;
-    grid-area: sbm;
+    opacity: 0;
   }
 
-  .close-modal-button {
-    /* position: absolute; */
-    /* right: 0; */
-    /* top: 0; */
-    /* margin: 4px; */
+  #close-modal-button {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: 0;
 
-    /* background-color: #afafaf; */
-    background: 0;
-    border: 0;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
     height: 28px;
     width: 28px;
     border-radius: 14px;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hide;
-
-    grid-area: cls;
   }
 
   #close-modal-button:hover {
-    border: 2px solid #fff;
-    /* background-color: #3e8e41; */
+    /* border: 2px solid #fff;
+    box-shadow: 0 0 2px 2px rgb(220, 220, 220); */
   }
 
   #close-modal-button img {
@@ -262,13 +243,12 @@
     width: 24px;
   }
 
-  .close-modal-button:active,
-  .close-modal-button:focus {
+  #close-modal-button:active,
+  #close-modal-button:focus {
     outline: none;
   }
 
-  .close-modal-button:active {
-    /* background-color: #f66; */
+  #close-modal-button:active {
     transform: scale(0.93);
     border-radius: 7px;
     border: 3px solid #fff;
