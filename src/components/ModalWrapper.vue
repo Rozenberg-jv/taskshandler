@@ -1,6 +1,6 @@
 <template>
   <div id="testmodal" v-if="isVisible">
-    <div class="date-picker" v-bind:class="{ shown: datePickerShow }">
+    <div class="date-picker">
       <date-picker
         v-model="newTask.date"
         :value="newTask.date"
@@ -12,11 +12,12 @@
     <div class="modal-box">
       <!-- <div class="input-area"> -->
       <div class="left-box">
-        <div class="image-picker-box">
+        <div class="image-picker-box" @click="imagePickerClick">
           <img id="image" src="/task_icon/task01.png" />
         </div>
-        <div class="type-pick-button">
-          <button v-on:click="typePicker">Set type</button>
+        <div class="type-pick-box">
+          <button v-on:click="typePickerClick">Set type</button>
+          <p class="type-text">{{ selectedTypeName }}</p>
         </div>
       </div>
       <div class="title">
@@ -60,7 +61,10 @@
         newTask: {
           title: "",
           text: "",
-          date: new Date()
+          date: new Date(),
+          type: {
+            name: "common"
+          }
           // date-picker: this.$moment().format("DD-MM-YYYY")
         },
         dpSetting: {
@@ -92,16 +96,20 @@
       },
       onDayClick(day) {
         console.log("dayClick", day);
+      },
+      typePickerClick() {
+        console.log("typePickerClick");
+      },
+      imagePickerClick() {
+        console.log("imagePickerClick");
       }
-      /* datePickerToggle() {
-        this.datePickerShown = !this.datePickerShown;
-        console.log("datePickerShown", this.datePickerShown);
-        console.log("datePickerShow", this.datePickerShow);
-      } */
     },
     computed: {
       isVisible: function() {
         return this.visible;
+      },
+      selectedTypeName() {
+        return this.newTask.type.name;
       }
     }
   };
@@ -139,7 +147,7 @@
 
   button:hover {
     border: 2px solid #fff;
-    box-shadow: 0 0 2px 2px rgb(220, 220, 220);
+    /* box-shadow: 0 0 2px 2px rgb(220, 220, 220); */
   }
 
   /* date picker */
@@ -175,14 +183,10 @@
     justify-content: space-around;
   }
 
-  .type-pick-button {
-    
-  }
-
   /* image picker */
   .image-picker-box {
     background-color: #bbba;
-    border-radius: 12px;
+    border-radius: 24px;
 
     height: 96px;
     margin: 8px;
@@ -192,11 +196,36 @@
     justify-content: space-around;
     align-items: center;
   }
-
+  .image-picker-box:hover {
+    border: 2px solid #fff;
+  }
+  .image-picker-box:active {
+    transform: scale(0.93);
+    border-radius: 12px;
+  }
   .image-picker-box #image {
     width: 64px;
     height: 64px;
   }
+
+  /* type picker */
+  .type-pick-box button {
+    background-color: #bbba;
+    border-radius: 16px;
+    padding: 8px;
+  }
+  .type-pick-box button:active {
+    transform: scale(0.93);
+    border-radius: 6px;
+    border: 3px solid #fff;
+  }
+  .type-text {
+    height: 32px;
+    color: white;
+    line-height: 32px;
+  }
+
+  /* central box */
 
   .title {
   }
@@ -231,11 +260,6 @@
     height: 28px;
     width: 28px;
     border-radius: 14px;
-  }
-
-  #close-modal-button:hover {
-    /* border: 2px solid #fff;
-    box-shadow: 0 0 2px 2px rgb(220, 220, 220); */
   }
 
   #close-modal-button img {
