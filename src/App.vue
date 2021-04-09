@@ -3,14 +3,18 @@
     <Header />
     <DaysSwiper />
   </div>
-  <ModalWrapper ref="modal" @newTaskSubmit="onNewTaskSubmit" />
+  <ModalWrapper
+    ref="modal"
+    :initialSlideIndex="initialSlideIndex"
+    @newTaskSubmit="onNewTaskSubmit"
+  />
 </template>
 
 <script>
   import DaysSwiper from "./components/DaysSwiper.vue";
   import Header from "./components/Header.vue";
   import ModalWrapper from "./components/ModalWrapper.vue";
-  import { mapActions } from "vuex";
+  import { mapGetters, mapActions } from "vuex";
 
   export default {
     name: "App",
@@ -20,7 +24,9 @@
       ModalWrapper
     },
     data() {
-      return {};
+      return {
+        initialSlideIndex: 0
+      };
     },
     methods: {
       openModal: function() {
@@ -31,9 +37,35 @@
       onNewTaskSubmit(newTask) {
         newTask.date = this.$moment(newTask.date, "DD-MM-YYYY").unix();
         this.addNewTask(newTask);
+      },
+      ...mapActions("tasksStore", ["initTaskList"]),
+      ...mapGetters("tasksStore", ["getTasksByDate"]),
+      calcInitialSlideIndex() {
+        const tasks = this.getTasksByDate();
+        const todayStr = new Date().toISOString().slice(0, 10);
+
+        let index = 0;
+
+        for (let [key] of tasks) {
+          if (key === todayStr) break;
+
+          index++;
+        }
+        console.log(index);
+        this.initialSlideIndex = index;
       }
     },
-    mounted() {}
+    created() {
+      console.log("app created before");
+      this.initTaskList();
+      this.calcInitialSlideIndex();
+      console.log("app created after");
+    },
+    mounted() {
+      console.log("app mounted before");
+
+      console.log("app mounted after");
+    }
   };
 </script>
 

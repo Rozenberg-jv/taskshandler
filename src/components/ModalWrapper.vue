@@ -10,44 +10,52 @@
       ></date-picker>
     </div>
     <div class="modal-box">
-      <!-- <div class="input-area"> -->
       <div class="left-box">
+        <div class="type-picker-box" v-if="!isPickingType">
+          <button v-on:click="typePickerExpand">{{ selectedTypeName }}</button>
+        </div>
+        <div class="type-list" v-if="isPickingType">
+          <button
+            v-on:click="typePickerPick(type)"
+            v-for="type in types"
+            :key="type"
+          >
+            {{ type.name }}
+          </button>
+        </div>
         <div class="image-picker-box" @click="imagePickerClick">
           <img id="image" src="/task_icon/task01.png" />
         </div>
-        <div class="type-pick-box">
-          <button v-on:click="typePickerClick">Set type</button>
-          <p class="type-text">{{ selectedTypeName }}</p>
-        </div>
       </div>
-      <div class="title">
+
+      <div class="middle-box">
         <input
           type="text"
           id="title"
+          class="inputs"
           v-model="newTask.title"
-          placeholder="title"
+          placeholder="Title"
         />
-      </div>
-      <div class="text">
         <textarea
           id="text"
+          class="inputs"
           v-model="newTask.text"
-          placeholder="text"
+          placeholder="Text"
           maxlength="1000"
           rows="15"
           wrap="hard"
         />
       </div>
-      <div class="submit-button">
-        <button id="submit-button" v-on:click="submit">
-          Submit
-        </button>
-      </div>
+
+      <div class="right-box"></div>
+
+      <button id="submit-button" v-on:click="validateOnSubmit">
+        <img src="/icons_dark/ok-256.png" />
+      </button>
       <button id="close-modal-button" v-on:click="closeModal">
         <img src="/icons_dark/close-64.png" />
       </button>
     </div>
-    <!-- </div> -->
   </div>
 </template>
 
@@ -71,7 +79,19 @@
           isDark: true,
           color: "green",
           trimWeeks: true
-        }
+        },
+        isPickingType: false,
+        types: [
+          {
+            name: "common"
+          },
+          {
+            name: "type2"
+          },
+          {
+            name: "type3"
+          }
+        ]
       };
     },
     components: {
@@ -84,12 +104,22 @@
       openModal() {
         this.visible = true;
       },
+      validateOnSubmit() {
+        if (!(this.newTask.title && this.newTask.text)) {
+          console.log("submit failed");
+        } else {
+          this.submit();
+        }
+      },
       submit() {
         this.$emit("newTaskSubmit", this.newTask);
         this.newTask = {
           title: "",
           text: "",
-          date: new Date()
+          date: new Date(),
+          type: {
+            name: "common"
+          }
           // date-picker: this.$moment().format("DD-MM-YYYY")
         };
         this.closeModal();
@@ -97,8 +127,14 @@
       onDayClick(day) {
         console.log("dayClick", day);
       },
-      typePickerClick() {
-        console.log("typePickerClick");
+      typePickerExpand() {
+        console.log("typePickerExpand");
+        this.isPickingType = !this.isPickingType;
+      },
+      typePickerPick(type) {
+        console.log("typePickerPick", type);
+        this.newTask.type.name = type.name;
+        this.isPickingType = !this.isPickingType;
       },
       imagePickerClick() {
         console.log("imagePickerClick");
@@ -129,7 +165,9 @@
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 9990;
 
-    font: bold "Georgia";
+    font-family: "Roboto", sans-serif;
+    font: bold Roboto, sans-serif;
+    font-weight: bold;
   }
 
   input,
@@ -142,12 +180,11 @@
   button {
     background: 0;
     border: 0;
-    font: 1.2em bolder Georgia;
+    font-size: 1.4em;
   }
 
   button:hover {
     border: 2px solid #fff;
-    /* box-shadow: 0 0 2px 2px rgb(220, 220, 220); */
   }
 
   /* date picker */
@@ -155,6 +192,7 @@
     position: absolute;
     text-align: center;
     left: 13%;
+    box-shadow: 0 2px 4px 4px #00000066;
   }
 
   .vc-container.vc-is-dark {
@@ -165,22 +203,25 @@
   .modal-box {
     display: flex;
     position: relative;
+    flex-direction: row;
+    justify-content: stretch;
     height: 60%;
     width: 40%;
     background-color: #555555e6;
     z-index: 9999;
 
     border-radius: 8px;
-    border: 2px solid #ffff;
     box-shadow: 0 2px 4px 4px #00000066;
   }
 
   /* left box */
   .left-box {
-    width: 15%;
+    width: 18%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    align-items: center;
+    margin: 8px;
   }
 
   /* image picker */
@@ -189,12 +230,14 @@
     border-radius: 24px;
 
     height: 96px;
+    width: 90%;
     margin: 8px;
 
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
+    box-sizing: border-box;
   }
   .image-picker-box:hover {
     border: 2px solid #fff;
@@ -209,62 +252,110 @@
   }
 
   /* type picker */
-  .type-pick-box button {
+  .type-picker-box {
+    width: 90%;
+    box-sizing: border-box;
+    margin: 8px;
+  }
+
+  .type-picker-box button {
+    width: 100%;
+    height: 36px;
     background-color: #bbba;
     border-radius: 16px;
-    padding: 8px;
+    font-weight: bold;
   }
-  .type-pick-box button:active {
+  .type-picker-box button:active {
     transform: scale(0.93);
     border-radius: 6px;
     border: 3px solid #fff;
   }
-  .type-text {
-    height: 32px;
-    color: white;
-    line-height: 32px;
+  .type-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+  }
+  .type-list button {
+    display: block;
+    height: 24px;
+    width: 100%;
+    margin: 1px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #bbba;
+
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .type-list button:active {
+    transform: scale(0.93);
+    border-radius: 2px;
+    border: 3px solid #fff;
   }
 
-  /* central box */
-
-  .title {
+  /* middle box */
+  .middle-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 2;
   }
+  .inputs {
+    background-color: #888888;
+    margin: 8px 0;
+    width: 98%;
+
+    padding: 4px;
+    border: 0;
+    border-radius: 4px;
+  }
+  .inputs:focus {
+    background-color: #cceecc;
+  }
+  /* title */
   #title {
+    height: 48px;
+
+    line-height: 48px;
     text-align: center;
-    padding: 0;
+    font-size: 38px;
   }
-
-  .text {
-  }
+  /* text */
   #text {
+    flex-grow: 2;
+
     resize: none;
+    font-size: 24px;
+    text-indent: 18px;
   }
 
-  .date-button {
+  /* right box */
+  .right-box {
+    width: 15%;
   }
 
-  .submit-button {
-    opacity: 0;
-  }
-
+  /* close button */
   #close-modal-button {
     display: flex;
     position: absolute;
-    right: 0;
-    top: 0;
+    right: 2px;
+    top: 2px;
 
     justify-content: center;
     align-items: center;
     overflow: hidden;
 
-    height: 28px;
-    width: 28px;
-    border-radius: 14px;
+    height: 36px;
+    width: 36px;
+    border-radius: 18px;
   }
 
   #close-modal-button img {
-    height: 24px;
-    width: 24px;
+    height: 32px;
+    width: 32px;
   }
 
   #close-modal-button:active,
@@ -273,6 +364,38 @@
   }
 
   #close-modal-button:active {
+    transform: scale(0.93);
+    border-radius: 7px;
+    border: 3px solid #fff;
+  }
+
+  /* submit button */
+  #submit-button {
+    display: flex;
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+
+    height: 96px;
+    width: 96px;
+    border-radius: 48px;
+  }
+
+  #submit-button img {
+    height: 90px;
+    width: 90px;
+  }
+
+  #submit-button:active,
+  #submitl-button:focus {
+    outline: none;
+  }
+
+  #submit-button:active {
     transform: scale(0.93);
     border-radius: 7px;
     border: 3px solid #fff;

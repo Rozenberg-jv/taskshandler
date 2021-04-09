@@ -76,7 +76,6 @@ const tasksStore = {
         });
     },
     addNewTask({ commit }, task) {
-
       commit("ADD_NEW_TASK", task);
     },
     removeTask({ commit }, id) {
