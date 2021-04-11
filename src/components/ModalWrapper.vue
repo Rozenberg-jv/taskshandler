@@ -12,7 +12,7 @@
     <div class="modal-box">
       <div class="left-box">
         <div class="type-picker-box" v-if="!isPickingType">
-          <button v-on:click="typePickerExpand">{{ selectedTypeName }}</button>
+          <button @click="typePickerExpand">{{ selectedTypeName }}</button>
         </div>
         <div class="type-list" v-if="isPickingType">
           <button
@@ -23,8 +23,23 @@
             {{ type.name }}
           </button>
         </div>
-        <div class="image-picker-box" @click="imagePickerClick">
-          <img id="image" src="/task_icon/task01.png" />
+
+        <div
+          class="image-picker-box"
+          @click="imagePickerExpand"
+          v-if="!isPickingImage"
+        >
+          <img id="image" :src="newTask.image" />
+          <!-- <img id="image" src="/task_icon/common_128.png" /> -->
+        </div>
+        <div class="image-list" v-if="isPickingImage">
+          <button
+            v-on:click="imagePickerPick(image)"
+            v-for="image in images"
+            :key="image"
+          >
+            <img :src="image" />
+          </button>
         </div>
       </div>
 
@@ -65,14 +80,15 @@
   export default {
     data() {
       return {
-        visible: true,
+        visible: false,
         newTask: {
           title: "",
           text: "",
           date: new Date(),
           type: {
             name: "common"
-          }
+          },
+          image: "/task_icon/common_128.png"
           // date-picker: this.$moment().format("DD-MM-YYYY")
         },
         dpSetting: {
@@ -81,6 +97,7 @@
           trimWeeks: true
         },
         isPickingType: false,
+        isPickingImage: false,
         types: [
           {
             name: "common"
@@ -91,6 +108,13 @@
           {
             name: "type3"
           }
+        ],
+        images: [
+          "/task_icon/common_128.png",
+          "/task_icon/leftarrow_white.png",
+          "/task_icon/rightarrow.png",
+          "/task_icon/trashcan-128.png",
+          "/task_icon/vue.png"
         ]
       };
     },
@@ -119,9 +143,11 @@
           date: new Date(),
           type: {
             name: "common"
-          }
+          },
+          image: "/task_icon/common_128.png"
           // date-picker: this.$moment().format("DD-MM-YYYY")
         };
+        (this.isPickingImage = false), (this.isPickingType = false);
         this.closeModal();
       },
       onDayClick(day) {
@@ -136,8 +162,14 @@
         this.newTask.type.name = type.name;
         this.isPickingType = !this.isPickingType;
       },
-      imagePickerClick() {
-        console.log("imagePickerClick");
+      imagePickerExpand() {
+        console.log("imagePickerExpand");
+        this.isPickingImage = !this.isPickingImage;
+      },
+      imagePickerPick(image) {
+        console.log("typePickerPick", image);
+        this.newTask.image = image;
+        this.isPickingImage = !this.isPickingImage;
       }
     },
     computed: {
@@ -251,6 +283,38 @@
     height: 64px;
   }
 
+  .image-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+
+    flex-grow: 2;
+  }
+  .image-list button {
+    display: flex;
+    height: 48px;
+    width: 48px;
+    margin: 2px;
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #bbba;
+
+    justify-content: center;
+    align-items: center;
+  }
+  .image-list button:active {
+    transform: scale(0.93);
+    border-radius: 2px;
+    border: 3px solid #fff;
+  }
+  .image-list button img {
+    height: 90%;
+    width: 90%;
+  }
+
   /* type picker */
   .type-picker-box {
     width: 90%;
@@ -276,6 +340,8 @@
     justify-content: center;
     align-items: center;
     width: 90%;
+
+    flex-grow: 2;
   }
   .type-list button {
     display: block;

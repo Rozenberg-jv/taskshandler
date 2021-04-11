@@ -39,23 +39,24 @@ const tasksStore = {
       state.taskList = tasks;
     },
     ADD_NEW_TASK({ taskList }, task) {
-      const newTaskRef = tasksRootRef.push(task, (e) => {
+      const id = uuid();
+      task.id = id;
+      tasksRootRef.child(id).set(task, (e) => {
         if (e) {
           console.error(e);
           return null;
         }
       });
 
-      const id = newTaskRef.getKey();
-      task.id = id;
       taskList[task.id] = task;
+      console.log("new task", id);
     },
     REMOVE_TASK({ taskList }, id) {
       tasksRootRef
         .child(id)
         .remove()
         .then(function() {
-          console.log("Remove succeeded.");
+          console.log("Remove succeeded");
           delete taskList[id];
         })
         .catch(function(error) {
@@ -64,8 +65,8 @@ const tasksStore = {
     }
   },
   actions: {
-    initTaskList({ commit }) {
-      tasksRootRef
+    async initTaskList({ commit }) {
+      await tasksRootRef
         .get()
         .then((data) => {
           const tasks = data.val();
@@ -79,7 +80,6 @@ const tasksStore = {
       commit("ADD_NEW_TASK", task);
     },
     removeTask({ commit }, id) {
-      // check
       commit("REMOVE_TASK", id);
     }
   }

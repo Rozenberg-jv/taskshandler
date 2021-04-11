@@ -1,7 +1,7 @@
 <template>
   <div class="main-wrapper">
     <Header />
-    <DaysSwiper />
+    <DaysSwiper :initialSlideIndex="initialSlideIndex" v-if="isLoaded" />
   </div>
   <ModalWrapper
     ref="modal"
@@ -25,7 +25,8 @@
     },
     data() {
       return {
-        initialSlideIndex: 0
+        initialSlideIndex: 0,
+        isLoaded: false
       };
     },
     methods: {
@@ -47,24 +48,22 @@
         let index = 0;
 
         for (let [key] of tasks) {
-          if (key === todayStr) break;
+          if (new Date(key) - new Date(todayStr) >= 0) break;
 
           index++;
         }
-        console.log(index);
+        console.log("App calcInitSlideIndex", index);
         this.initialSlideIndex = index;
+        this.isLoaded = true;
+      }
+    },
+    computed: {
+      loaded: () => {
+        return this.isLoaded;
       }
     },
     created() {
-      console.log("app created before");
-      this.initTaskList();
-      this.calcInitialSlideIndex();
-      console.log("app created after");
-    },
-    mounted() {
-      console.log("app mounted before");
-
-      console.log("app mounted after");
+      this.initTaskList().then(this.calcInitialSlideIndex);
     }
   };
 </script>

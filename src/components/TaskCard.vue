@@ -3,8 +3,10 @@
     <!-- <MdCard @click.native="onItemClick" class="md-with-hover"> -->
 
     <div class="card-block left">
-      <div class="card-image"><img :src="imageUrl2" alt="type-image" /></div>
-      <!-- <div class="card-image" :style="imageStyle"></div> -->
+      <div class="card-image">
+        <img :src="image" alt="type-image" />
+      </div>
+      <!-- <div class="card-image"><img :src="imageUrl2" alt="type-image" /></div> -->
     </div>
     <div class="card-block center">
       <div class="card-title">
@@ -42,8 +44,9 @@
     components: {},
     data() {
       return {
-        defaultImageName: "task01.png",
-        isChecked: false
+        defaultImageName: "/task_icon/common_128.png",
+        isChecked: false,
+        image: this.cardData.image ? this.cardData.image : this.defaultImageName
       };
     },
     props: {
@@ -52,7 +55,8 @@
         id: { type: String, require: true },
         title: { type: String, require: false },
         text: { type: String, require: true },
-        date: { type: Number, require: true }
+        date: { type: Number, require: true },
+        image: { type: String, require: true, default: "" }
       }
     },
     methods: {
@@ -67,6 +71,8 @@
       },
       onAction2Click(e) {
         e.stopPropagation();
+        console.log("cardData.image", this.cardData.image);
+        console.log("image", this.image);
       },
       onCardClick() {
         this.isChecked = !this.isChecked;
@@ -99,12 +105,18 @@
 
         return image;
       },
+      imageUrl3() {
+        return this.cardData.image;
+      },
       computeIsChecked() {
         return this.isChecked;
       },
       dateComputed() {
         return this.$moment.unix(this.cardData.date).format("LLLL");
       }
+    },
+    mounted() {
+      // console.log(this.cardData);
     }
   };
 </script>
