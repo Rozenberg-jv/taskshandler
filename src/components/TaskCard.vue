@@ -6,7 +6,6 @@
       <div class="card-image">
         <img :src="image" alt="type-image" />
       </div>
-      <!-- <div class="card-image"><img :src="imageUrl2" alt="type-image" /></div> -->
     </div>
     <div class="card-block center">
       <div class="card-title">
@@ -15,11 +14,15 @@
 
       <div class="card-content" v-if="computeIsChecked">
         <div>
-          <p>{{ dateComputed }}</p>
+          {{ cardData.type.name }}
         </div>
         <br />
         <div>
-          <p>{{ cardData.text }}</p>
+          {{ dateComputed }}
+        </div>
+        <br />
+        <div>
+          {{ cardData.text }}
         </div>
       </div>
     </div>
@@ -46,17 +49,15 @@
       return {
         defaultImageName: "/task_icon/common_128.png",
         isChecked: false,
-        image: this.cardData.image ? this.cardData.image : this.defaultImageName
+        image: this.cardData.image
+          ? this.cardData.image
+          : "/task_icon/common_128.png",
+        type: this.cardData.type ? this.cardData.type : { name: "common" }
       };
     },
     props: {
       cardData: {
-        imageName: { type: String },
-        id: { type: String, require: true },
-        title: { type: String, require: false },
-        text: { type: String, require: true },
-        date: { type: Number, require: true },
-        image: { type: String, require: true, default: "" }
+        type: Object
       }
     },
     methods: {
@@ -79,15 +80,15 @@
 
         this.$el.classList.toggle("collapsed");
         this.$el.classList.toggle("expanded");
-      },
+      }
       //
-      resolveImageUrl: function(name) {
+      /* resolveImageUrl: function(name) {
         let images = require.context("@/assets/", false, /\.png$|\.jpg$/);
         return images("./" + name);
-      }
+      } */
     },
     computed: {
-      imageStyle() {
+      /* imageStyle() {
         return {
           "background-image": this.imageUrl
         };
@@ -98,25 +99,16 @@
         let image = this.resolveImageUrl(imageIs || this.defaultImageName);
 
         return `url(${image})`;
-      },
-      imageUrl2() {
-        let imageIs = this.cardData.imageName;
-        let image = this.resolveImageUrl(imageIs || this.defaultImageName);
-
-        return image;
-      },
-      imageUrl3() {
-        return this.cardData.image;
-      },
+      }, */
+      /* imageUrl3() {
+        return encodeURIComponent(this.image);
+      }, */
       computeIsChecked() {
         return this.isChecked;
       },
       dateComputed() {
         return this.$moment.unix(this.cardData.date).format("LLLL");
       }
-    },
-    mounted() {
-      // console.log(this.cardData);
     }
   };
 </script>

@@ -52,7 +52,7 @@
 
           index++;
         }
-        console.log("App calcInitSlideIndex", index);
+        // console.log("App calcInitSlideIndex", index);
         this.initialSlideIndex = index;
         this.isLoaded = true;
       }
