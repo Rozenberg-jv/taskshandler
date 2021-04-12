@@ -1,6 +1,6 @@
 <template>
   <div class="day-cards-handler">
-    <div class="header">{{ headerDate }}</div>
+    <div class="header" @click="toggleAllCards">{{ headerDate }}</div>
     <TaskCard
       v-for="(taskData, index) in taskArray"
       :key="index"
@@ -18,6 +18,11 @@
       TaskCard
     },
     props: { taskArray: Array, date: String },
+    methods: {
+      toggleAllCards() {
+        console.log("toggle all");
+      }
+    },
     computed: {
       headerDate: function() {
         return this.$moment(this.date).format("DD-MM-YYYY");
@@ -50,6 +55,8 @@
     border-radius: 24px;
     box-shadow: 0 2px 2px 2px #404040;
     font: bold 1.2em/48px "Roboto", sans-serif;
+
+    cursor: pointer;
   }
 
   /* .header p {
