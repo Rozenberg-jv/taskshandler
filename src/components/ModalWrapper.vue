@@ -18,7 +18,7 @@
           <button
             v-on:click="typePickerPick(type)"
             v-for="type in types"
-            :key="type"
+            :key="type.name"
           >
             {{ type.name }}
           </button>
@@ -30,7 +30,6 @@
           v-if="!isPickingImage"
         >
           <img id="image" :src="newTask.image" />
-          <!-- <img id="image" src="/task_icon/common_128.png" /> -->
         </div>
         <div class="image-list" v-if="isPickingImage">
           <button
@@ -76,11 +75,12 @@
 
 <script>
   import { DatePicker } from "v-calendar";
+  import { mapGetters } from "vuex";
 
   export default {
     data() {
       return {
-        visible: false,
+        visible: true,
         newTask: {
           title: "",
           text: "",
@@ -98,7 +98,8 @@
         },
         isPickingType: false,
         isPickingImage: false,
-        types: [
+        types: this.getTaskTypes(),
+        /* types: [
           {
             name: "common"
           },
@@ -108,20 +109,22 @@
           {
             name: "type3"
           }
-        ],
-        images: [
+        ], */
+        images: this.getIconImages()
+        /* images: [
           "/task_icon/common_128.png",
           "/task_icon/leftarrow_white.png",
           "/task_icon/rightarrow.png",
           "/task_icon/trashcan-128.png",
           "/task_icon/vue.png"
-        ]
+        ] */
       };
     },
     components: {
       DatePicker
     },
     methods: {
+      ...mapGetters(["getTaskTypes", "getIconImages"]),
       closeModal() {
         this.visible = false;
       },
@@ -256,6 +259,53 @@
     margin: 8px;
   }
 
+  /* type picker */
+  .type-picker-box {
+    width: 90%;
+    box-sizing: border-box;
+    margin: 8px;
+  }
+
+  .type-picker-box button {
+    width: 100%;
+    height: 36px;
+    background-color: #bbba;
+    border-radius: 16px;
+    font-weight: bold;
+  }
+  .type-picker-box button:active {
+    transform: scale(0.93);
+    border-radius: 6px;
+    border: 3px solid #fff;
+  }
+  .type-list {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2px;
+    flex-grow: 2;
+
+    width: 90%;
+  }
+  .type-list button {
+    display: block;
+    height: 24px;
+    width: 100%;
+
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-color: #bbba;
+
+    font-size: 1.1em;
+    font-weight: bold;
+  }
+  .type-list button:active {
+    transform: scale(0.93);
+    border-radius: 2px;
+    border: 3px solid #fff;
+  }
+
   /* image picker */
   .image-picker-box {
     background-color: #bbba;
@@ -313,52 +363,6 @@
   .image-list button img {
     height: 90%;
     width: 90%;
-  }
-
-  /* type picker */
-  .type-picker-box {
-    width: 90%;
-    box-sizing: border-box;
-    margin: 8px;
-  }
-
-  .type-picker-box button {
-    width: 100%;
-    height: 36px;
-    background-color: #bbba;
-    border-radius: 16px;
-    font-weight: bold;
-  }
-  .type-picker-box button:active {
-    transform: scale(0.93);
-    border-radius: 6px;
-    border: 3px solid #fff;
-  }
-  .type-list {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 90%;
-
-    flex-grow: 2;
-  }
-  .type-list button {
-    display: block;
-    height: 24px;
-    width: 100%;
-    margin: 1px;
-    box-sizing: border-box;
-    border-radius: 6px;
-    background-color: #bbba;
-
-    font-size: 1.1em;
-    font-weight: bold;
-  }
-  .type-list button:active {
-    transform: scale(0.93);
-    border-radius: 2px;
-    border: 3px solid #fff;
   }
 
   /* middle box */
