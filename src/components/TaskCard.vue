@@ -1,7 +1,9 @@
 <template>
-  <div class="card collapsed" @click="onCardClick">
-    <!-- <MdCard @click.native="onItemClick" class="md-with-hover"> -->
-
+  <div
+    class="card"
+    :class="{ collapsed: !computeIsChecked, expanded: computeIsChecked }"
+    @click="onCardClick"
+  >
     <div class="card-block left">
       <div class="card-image">
         <img :src="image" alt="type-image" />
@@ -48,7 +50,7 @@
     data() {
       return {
         defaultImageName: "/task_icon/common_128.png",
-        isChecked: false,
+        isExpanded: this.forceExpand,
         image: this.cardData.image
           ? this.cardData.image
           : "/task_icon/common_128.png",
@@ -58,53 +60,38 @@
     props: {
       cardData: {
         type: Object
+      },
+      forceExpand: {
+        type: Boolean
       }
     },
     methods: {
       ...mapActions("tasksStore", ["removeTask"]),
+      onCardClick() {
+        this.isExpanded = !this.isExpanded;
+
+        /* this.$el.classList.toggle("collapsed");
+        this.$el.classList.toggle("expanded"); */
+      },
       // action handlers
       onRemoveClick(id, e) {
         e.stopPropagation();
-        // console.log(this.$root); // for future custom confirm modal
         if (confirm("are you sure?")) {
           this.removeTask(id);
         }
       },
       onAction2Click(e) {
         e.stopPropagation();
-        console.log("cardData.image", this.cardData.image);
-        console.log("image", this.image);
-      },
-      onCardClick() {
-        this.isChecked = !this.isChecked;
-
-        this.$el.classList.toggle("collapsed");
-        this.$el.classList.toggle("expanded");
       }
-      //
-      /* resolveImageUrl: function(name) {
-        let images = require.context("@/assets/", false, /\.png$|\.jpg$/);
-        return images("./" + name);
-      } */
+    },
+    watch: {
+      forceExpand(newVal) {
+        this.isExpanded = newVal;
+      }
     },
     computed: {
-      /* imageStyle() {
-        return {
-          "background-image": this.imageUrl
-        };
-      },
-      imageUrl() {
-        let imageIs = this.cardData.imageName;
-
-        let image = this.resolveImageUrl(imageIs || this.defaultImageName);
-
-        return `url(${image})`;
-      }, */
-      /* imageUrl3() {
-        return encodeURIComponent(this.image);
-      }, */
       computeIsChecked() {
-        return this.isChecked;
+        return this.isExpanded;
       },
       dateComputed() {
         return this.$moment.unix(this.cardData.date).format("LLLL");
@@ -229,20 +216,12 @@
   }
 
   .card-actions {
-    /* right: 0; */
-    /* margin-right: -2px; */
     display: flex;
     flex-flow: row wrap;
     align-content: flex-start;
-    /* flex-direction: column; */
-    /* flex-wrap: wrap; */
     padding: 0;
     justify-content: space-around;
     align-items: flex-start;
-
-    /* opacity: 0; */
-    /* transition: all 0.3s 0.2s ease; */
-    /* transform: translateX(1000%); */
   }
 
   .card-actions button {
@@ -270,11 +249,6 @@
   }
 
   /*  */
-
-  /* .card-actions button:active,
-.card-actions button:focus {
-  outline: none;
-} */
 
   .card-actions button:active {
     transform: scale(0.93);
