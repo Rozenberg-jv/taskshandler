@@ -11,33 +11,56 @@
     </div>
     <div class="modal-box">
       <div class="left-box">
-        <div class="type-picker-box" v-if="!isPickingType">
-          <button @click="typePickerExpand">{{ selectedTypeName }}</button>
+        <div
+          class="timetype-picker-box"
+          v-if="!isPicking"
+          @click="timetypePickerExpand"
+        >
+          <img :src="newTask.timetype.image" />
+        </div>
+        <div
+          class="type-picker-box"
+          v-if="!isPicking"
+          @click="typePickerExpand"
+        >
+          <button>{{ selectedTypeName }}</button>
+        </div>
+        <div
+          class="image-picker-box"
+          @click="imagePickerExpand"
+          v-if="!isPicking"
+        >
+          <img :src="newTask.image.file" />
+        </div>
+        <!--  -->
+        <div class="timetype-list" v-if="isPickingTimeType">
+          <button
+            v-on:click="timetypePickerPick(tType)"
+            v-for="tType in timeTypes"
+            :key="tType.name"
+            :class="{ picked: tType.name === newTask.timetype.name }"
+          >
+            <img :src="tType.image" />
+          </button>
         </div>
         <div class="type-list" v-if="isPickingType">
           <button
             v-on:click="typePickerPick(type)"
             v-for="type in types"
             :key="type.name"
+            :class="{ picked: type.name === newTask.type.name }"
           >
             {{ type.name }}
           </button>
-        </div>
-
-        <div
-          class="image-picker-box"
-          @click="imagePickerExpand"
-          v-if="!isPickingImage"
-        >
-          <img id="image" :src="newTask.image" />
         </div>
         <div class="image-list" v-if="isPickingImage">
           <button
             v-on:click="imagePickerPick(image)"
             v-for="image in images"
             :key="image"
+            :class="{ picked: image.name === newTask.image.name }"
           >
-            <img :src="image" />
+            <img :src="image.file" />
           </button>
         </div>
       </div>
@@ -88,7 +111,11 @@
           type: {
             name: "common"
           },
-          image: "/task_icon/common_128.png"
+          timetype: {
+            name: "single",
+            image: "/icons_dark/clock-single-128.png"
+          },
+          image: { name: "common", file: "/task_icon/common_128.png" }
           // date-picker: this.$moment().format("DD-MM-YYYY")
         },
         dpSetting: {
@@ -98,33 +125,22 @@
         },
         isPickingType: false,
         isPickingImage: false,
+        isPickingTimeType: false,
         types: this.getTaskTypes(),
-        /* types: [
-          {
-            name: "common"
-          },
-          {
-            name: "type2"
-          },
-          {
-            name: "type3"
-          }
-        ], */
-        images: this.getIconImages()
-        /* images: [
-          "/task_icon/common_128.png",
-          "/task_icon/leftarrow_white.png",
-          "/task_icon/rightarrow.png",
-          "/task_icon/trashcan-128.png",
-          "/task_icon/vue.png"
-        ] */
+        images: this.getIconImages(),
+        timeTypes: this.getTimeTypes()
       };
     },
     components: {
       DatePicker
     },
     methods: {
-      ...mapGetters(["getTaskTypes", "getIconImages"]),
+      ...mapGetters([
+        "getTaskTypes",
+        "getIconImages",
+        "getImageByName",
+        "getTimeTypes"
+      ]),
       closeModal() {
         this.visible = false;
       },
@@ -147,32 +163,51 @@
           type: {
             name: "common"
           },
-          image: "/task_icon/common_128.png"
+          timetype: {
+            name: "single",
+            image: "/icons_dark/clock-single-128.png"
+          },
+          image: {
+            name: "common",
+            file: "/task_icon/common_128.png"
+          }
           // date-picker: this.$moment().format("DD-MM-YYYY")
         };
-        (this.isPickingImage = false), (this.isPickingType = false);
+        this.isPickingImage = false;
+        this.isPickingType = false;
         this.closeModal();
       },
       onDayClick(day) {
         console.log("dayClick", day);
       },
+
+      timetypePickerExpand() {
+        console.log("timetypePickerExpand");
+        this.isPickingTimeType = true;
+      },
       typePickerExpand() {
         console.log("typePickerExpand");
-        this.isPickingType = !this.isPickingType;
-      },
-      typePickerPick(type) {
-        console.log("typePickerPick", type);
-        this.newTask.type.name = type.name;
-        this.isPickingType = !this.isPickingType;
+        this.isPickingType = true;
       },
       imagePickerExpand() {
         console.log("imagePickerExpand");
-        this.isPickingImage = !this.isPickingImage;
+        this.isPickingImage = true;
+      },
+
+      timetypePickerPick(timetype) {
+        console.log("timetypePickerPick", timetype);
+        this.newTask.timetype = timetype;
+        this.isPickingTimeType = false;
+      },
+      typePickerPick(type) {
+        console.log("typePickerPick", type);
+        this.newTask.type = type;
+        this.isPickingType = false;
       },
       imagePickerPick(image) {
         console.log("typePickerPick", image);
         this.newTask.image = image;
-        this.isPickingImage = !this.isPickingImage;
+        this.isPickingImage = false;
       }
     },
     computed: {
@@ -181,6 +216,11 @@
       },
       selectedTypeName() {
         return this.newTask.type.name;
+      },
+      isPicking() {
+        return (
+          this.isPickingType || this.isPickingImage || this.isPickingTimeType
+        );
       }
     }
   };
@@ -259,9 +299,69 @@
     margin: 8px;
   }
 
+  /* timetype picker */
+  .timetype-picker-box {
+    background-color: #bbba;
+    border-radius: 24px;
+
+    height: 128px;
+    width: 128px;
+    margin: 8px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .timetype-picker-box:hover {
+    border: 2px solid #fff;
+  }
+  .timetype-picker-box:active {
+    transform: scale(0.93);
+    border-radius: 12px;
+  }
+  .timetype-picker-box img {
+    width: 112px;
+    height: 112px;
+  }
+
+  .timetype-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    width: 128px;
+    gap: 4px;
+  }
+  .timetype-list button {
+    display: flex;
+    height: 60px;
+    width: 60px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    background-color: #bbba;
+
+    justify-content: center;
+    align-items: center;
+  }
+  .timetype-list button:active {
+    transform: scale(0.93);
+    border-radius: 6px;
+    border: 3px solid #fff;
+  }
+  .timetype-list button img {
+    height: 90%;
+    width: 90%;
+  }
+  .timetype-list button.picked {
+    background-color: #cceecc;
+  }
+
   /* type picker */
   .type-picker-box {
-    width: 90%;
+    width: 128px;
     box-sizing: border-box;
     margin: 8px;
   }
@@ -284,9 +384,8 @@
     justify-content: center;
     align-items: center;
     gap: 2px;
-    flex-grow: 2;
 
-    width: 90%;
+    width: 128px;
   }
   .type-list button {
     display: block;
@@ -298,12 +397,15 @@
     background-color: #bbba;
 
     font-size: 1.1em;
-    font-weight: bold;
+    font-weight: 400;
   }
   .type-list button:active {
     transform: scale(0.93);
     border-radius: 2px;
     border: 3px solid #fff;
+  }
+  .type-list button.picked {
+    font-weight: bold;
   }
 
   /* image picker */
@@ -328,7 +430,7 @@
     transform: scale(0.93);
     border-radius: 12px;
   }
-  .image-picker-box #image {
+  .image-picker-box img {
     width: 64px;
     height: 64px;
   }
@@ -338,16 +440,14 @@
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    width: 90%;
-
-    flex-grow: 2;
+    align-items: flex-start;
+    width: 128px;
+    gap: 4px;
   }
   .image-list button {
     display: flex;
-    height: 48px;
-    width: 48px;
-    margin: 2px;
+    height: 60px;
+    width: 60px;
     box-sizing: border-box;
     border-radius: 6px;
     background-color: #bbba;
@@ -363,6 +463,9 @@
   .image-list button img {
     height: 90%;
     width: 90%;
+  }
+  .image-list button.picked {
+    background-color: #cceecc;
   }
 
   /* middle box */

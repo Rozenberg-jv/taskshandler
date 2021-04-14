@@ -52,8 +52,10 @@
         defaultImageName: "/task_icon/common_128.png",
         isExpanded: this.forceExpand,
         image: this.cardData.image
-          ? this.cardData.image
-          : "/task_icon/common_128.png",
+          ? this.cardData.image.file
+            ? this.cardData.image.file
+            : "/task_icon/common_128.png"
+          : "/task_icon/common_128.png", // simplify after get rid of card.image field
         type: this.cardData.type ? this.cardData.type : { name: "common" }
       };
     },
@@ -69,9 +71,6 @@
       ...mapActions("tasksStore", ["removeTask"]),
       onCardClick() {
         this.isExpanded = !this.isExpanded;
-
-        /* this.$el.classList.toggle("collapsed");
-        this.$el.classList.toggle("expanded"); */
       },
       // action handlers
       onRemoveClick(id, e) {

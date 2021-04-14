@@ -2,17 +2,24 @@ const taskTimeTypesStore = {
   state: {
     taskTimeTypes: [
       {
-        name: "single"
+        name: "single",
+        image: "/icons_dark/clock-single-128.png"
       },
       {
-        name: "periodic"
+        name: "periodic",
+        image: "/icons_dark/clock-periodic-128.png"
       },
       {
-        name: "continuous"
+        name: "continuous",
+        image: "/icons_dark/clock-continuous-128.png"
       }
     ]
   },
-  getters: {},
+  getters: {
+    getTimeTypes({ taskTimeTypes }) {
+      return taskTimeTypes;
+    }
+  },
   mutations: {},
   actions: {}
 };
