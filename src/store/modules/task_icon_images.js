@@ -18,7 +18,7 @@ const taskIconImagesStore = {
     getIconImages({ taskIconImages }) {
       return taskIconImages;
     },
-    getImageByName({ taskIconImages }, name) {
+    getIconImageByName({ taskIconImages }, name) {
       return taskIconImages.filter((img) => {
         return img.name === name;
       });

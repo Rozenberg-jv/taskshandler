@@ -1,15 +1,23 @@
 <template>
   <div class="main-wrapper">
-    <Header />
+    <Header @openModal="onOpenModal" />
     <DaysSwiper :initialSlideIndex="initialSlideIndex" v-if="isLoaded" />
   </div>
   <ModalWrapper
     ref="modal"
-    :initialSlideIndex="initialSlideIndex"
+    :taskDataProp="defaultTaskData"
     @newTaskSubmit="onNewTaskSubmit"
+    @closeModal="onCloseModal"
+    v-if="showModal"
   />
 </template>
-
+/*
+  https://medium.com/js-dojo/how-to-build-a-reusable-vuejs-modal-component-fc8d7f3b4735
+  https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component
+  https://v3.vuejs.org/guide/component-slots.html#slot-content
+  https://v3.vuejs.org/examples/modal.html
+  https://vuex.vuejs.org/ru/guide/getters.html
+ */
 <script>
   import DaysSwiper from "./components/DaysSwiper.vue";
   import Header from "./components/Header.vue";
@@ -25,22 +33,49 @@
     },
     data() {
       return {
+        showModal: false,
         initialSlideIndex: 0,
-        isLoaded: false
+        isLoaded: false,
+        defaultTaskData: {
+          title: "",
+          text: "",
+          date: new Date(),
+          type: this.getTaskTypeByName("common"),
+          timetype: this.getTaskTimeTypeByName("single"),
+          image: this.getIconImageByName("common")
+        }
       };
     },
     methods: {
-      openModal: function() {
-        let modal = this.$refs.modal;
-        modal.openModal();
+      toggleModal: function() {
+        // let modal = this.$refs.modal;
+        // modal.openModal();
+        // console.log(modal.newTask);
+        this.showModal = !this.showModal;
       },
-      ...mapActions("tasksStore", ["addNewTask"]),
+      onOpenModal(taskTemplate) {
+        // console.log(this.getTaskTypeByName("common"));
+        if (taskTemplate) {
+          console.log("1");
+        } else {
+          console.log("2");
+        }
+        this.showModal = true;
+      },
+      onCloseModal() {
+        this.showModal = false;
+      },
+      ...mapActions("tasksStore", ["addNewTask", "initTaskList"]),
+      ...mapGetters("tasksStore", ["getTasksByDate"]),
+      ...mapGetters([
+        "getTaskTypeByName",
+        "getTaskTimeTypeByName",
+        "getIconImageByName"
+      ]),
       onNewTaskSubmit(newTask) {
         newTask.date = this.$moment(newTask.date, "DD-MM-YYYY").unix();
         this.addNewTask(newTask);
       },
-      ...mapActions("tasksStore", ["initTaskList"]),
-      ...mapGetters("tasksStore", ["getTasksByDate"]),
       calcInitialSlideIndex() {
         const tasks = this.getTasksByDate();
         const todayStr = new Date().toISOString().slice(0, 10);

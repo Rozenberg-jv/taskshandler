@@ -18,6 +18,11 @@ const taskTimeTypesStore = {
   getters: {
     getTimeTypes({ taskTimeTypes }) {
       return taskTimeTypes;
+    },
+    getTaskTimeTypeByName({ taskTimeTypes }, name) {
+      return taskTimeTypes.filter((tType) => {
+        return tType.name === name;
+      });
     }
   },
   mutations: {},

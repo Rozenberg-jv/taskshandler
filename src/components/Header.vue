@@ -8,30 +8,37 @@
 </template>
 
 <script>
-  import { mapActions } from "vuex";
+  import { mapActions, mapGetters } from "vuex";
 
   export default {
     name: "Header",
-    data() {
-      return {
-        exampleTask: {
-          id: 111,
-          title: "title111",
-          text:
-            "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio itaque ea, nostrum odio. Dolores, sed accusantium quasi non.",
-          date: "08.06.2021"
-        }
-      };
-    },
     methods: {
       ...mapActions("tasksStore", ["addNewTask"]),
+      ...mapGetters([
+        "getTaskTypeByName",
+        "getTaskTimeTypeByName",
+        "getIconImageByName"
+      ]),
       openAddTaskModal() {
-        this.$root.openModal();
-      },
-      generateExampleTask() {
+        // this.$root.openModal();
+        this.$emit("openModal", this.newTaskTemplate);
+      }
+      /* generateExampleTask() {
         this.exampleTask.id = this.exampleTask.id + 1;
         return this.exampleTask;
-      }
+      } */
+    },
+    data() {
+      return {
+        newTaskTemplate: {
+          title: "",
+          text: "",
+          date: new Date(),
+          type: this.getTaskTypeByName("common"),
+          timetype: this.getTaskTimeTypeByName("single"),
+          image: this.getIconImageByName("common")
+        }
+      };
     }
   };
 </script>

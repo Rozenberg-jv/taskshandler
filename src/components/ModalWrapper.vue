@@ -1,5 +1,6 @@
 <template>
-  <div id="testmodal" v-if="isVisible">
+  <div id="testmodal">
+    <!-- <div id="testmodal" v-if="isVisible"> -->
     <div class="date-picker">
       <date-picker
         v-model="newTask.date"
@@ -101,22 +102,21 @@
   import { mapGetters } from "vuex";
 
   export default {
+    props: {
+      taskDataProp: {
+        type: Object
+      }
+    },
     data() {
       return {
-        visible: true,
+        // visible: false,
         newTask: {
-          title: "",
-          text: "",
-          date: new Date(),
-          type: {
-            name: "common"
-          },
-          timetype: {
-            name: "single",
-            image: "/icons_dark/clock-single-128.png"
-          },
-          image: { name: "common", file: "/task_icon/common_128.png" }
-          // date-picker: this.$moment().format("DD-MM-YYYY")
+          title: this.taskDataProp.title,
+          text: this.taskDataProp.text,
+          date: this.taskDataProp.date,
+          type: this.taskDataProp.type,
+          timetype: this.taskDataProp.timetype,
+          image: this.taskDataProp.image
         },
         dpSetting: {
           isDark: true,
@@ -142,11 +142,12 @@
         "getTimeTypes"
       ]),
       closeModal() {
-        this.visible = false;
+        // this.visible = false;
+        this.$emit("closeModal");
       },
-      openModal() {
+      /* openModal() {
         this.visible = true;
-      },
+      }, */
       validateOnSubmit() {
         if (!(this.newTask.title && this.newTask.text)) {
           console.log("submit failed");
