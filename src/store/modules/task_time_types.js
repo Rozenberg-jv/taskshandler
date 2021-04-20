@@ -19,10 +19,8 @@ const taskTimeTypesStore = {
     getTimeTypes({ taskTimeTypes }) {
       return taskTimeTypes;
     },
-    getTaskTimeTypeByName({ taskTimeTypes }, name) {
-      return taskTimeTypes.filter((tType) => {
-        return tType.name === name;
-      });
+    getTaskTimeTypeByName: ({ taskTimeTypes }) => (name) => {
+      return taskTimeTypes.find((type) => type.name === name);
     }
   },
   mutations: {},

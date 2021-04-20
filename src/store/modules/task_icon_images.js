@@ -18,10 +18,8 @@ const taskIconImagesStore = {
     getIconImages({ taskIconImages }) {
       return taskIconImages;
     },
-    getIconImageByName({ taskIconImages }, name) {
-      return taskIconImages.filter((img) => {
-        return img.name === name;
-      });
+    getIconImageByName: ({ taskIconImages }) => (name) => {
+      return taskIconImages.find((img) => img.name === name);
     }
   },
   mutations: {},

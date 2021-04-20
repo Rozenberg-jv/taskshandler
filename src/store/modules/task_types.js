@@ -23,12 +23,8 @@ const taskTypesStore = {
     getTaskTypes({ taskTypes }) {
       return taskTypes;
     },
-    getTaskTypeByName: (state) => (name) => {
-      console.log("name", name);
-      return state.taskTypes.find((type) => {
-        console.log("type", type);
-        return type.name === name;
-      });
+    getTaskTypeByName: ({ taskTypes }) => (name) => {
+      return taskTypes.find((type) => type.name === name);
     }
   },
   mutations: {},

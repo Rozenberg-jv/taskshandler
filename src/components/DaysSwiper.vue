@@ -13,7 +13,11 @@
       @slideChange="onSlideChange"
     >
       <swiper-slide v-for="[date, taskArray] in tasksByDate" :key="date">
-        <DayCardHandler :taskArray="taskArray" :date="date" />
+        <DayCardHandler
+          :taskArray="taskArray"
+          :date="date"
+          @editTask="onEditTask"
+        />
       </swiper-slide>
     </swiper>
     <div class="swiper-btn-prev"></div>
@@ -54,15 +58,17 @@
       onSlideChange() {
         // console.log("slide change");
       },
-      ...mapGetters("tasksStore", ["getTasksByDate"])
+      ...mapGetters("tasksStore", ["getTasksByDate"]),
+      onEditTask(id) {
+        this.$emit("editTask", id);
+      }
     },
     computed: {
       tasksByDate: function() {
         return this.getTasksByDate();
       }
     },
-    created() {
-    }
+    created() {}
   };
 </script>
 

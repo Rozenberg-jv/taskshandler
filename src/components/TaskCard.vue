@@ -1,7 +1,7 @@
 <template>
   <div
     class="card"
-    :class="{ collapsed: !computeIsChecked, expanded: computeIsChecked }"
+    :class="{ collapsed: !computeIsExpanded, expanded: computeIsExpanded }"
     @click="onCardClick"
   >
     <div class="card-block left">
@@ -14,18 +14,14 @@
         <p>{{ cardData.title }}</p>
       </div>
 
-      <div class="card-content" v-if="computeIsChecked">
-        <div>
-          {{ cardData.type.name }}
-        </div>
+      <div class="card-content" v-if="computeIsExpanded">
+        <div>type: {{ cardData.type.name }}</div>
         <br />
-        <div>
-          {{ dateComputed }}
-        </div>
+        <div>timeType: {{ cardData.timetype.name }}</div>
         <br />
-        <div>
-          {{ cardData.text }}
-        </div>
+        <div>date: {{ dateComputed }}</div>
+        <br />
+        <div>text: {{ cardData.text }}</div>
       </div>
     </div>
     <div class="card-block right">
@@ -33,7 +29,10 @@
         <button @click="onRemoveClick(cardData.id, $event)">
           <img src="/icons_dark/trashcan-64.png" />
         </button>
-        <button @click="onAction2Click"></button>
+        <button @click="onEditClick(cardData.id, $event)">
+          <img src="/icons_dark/edit-pencil-128.png" />
+          <!-- <img src="/icons_dark/edit-blank-64.png" /> -->
+        </button>
         <button></button>
         <button></button>
       </div>
@@ -71,6 +70,8 @@
       ...mapActions("tasksStore", ["removeTask"]),
       onCardClick() {
         this.isExpanded = !this.isExpanded;
+        console.log("click, expanded: ", this.isExpanded);
+        // this.$emit("cardClick", this.isExpanded);
       },
       // action handlers
       onRemoveClick(id, e) {
@@ -79,17 +80,19 @@
           this.removeTask(id);
         }
       },
-      onAction2Click(e) {
+      onEditClick(id, e) {
         e.stopPropagation();
+        this.$emit("editTask", id);
       }
     },
     watch: {
       forceExpand(newVal) {
+        console.log("watch, newVal: " + newVal);
         this.isExpanded = newVal;
       }
     },
     computed: {
-      computeIsChecked() {
+      computeIsExpanded() {
         return this.isExpanded;
       },
       dateComputed() {

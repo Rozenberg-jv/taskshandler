@@ -32,6 +32,9 @@ const tasksStore = {
       );
 
       return result;
+    },
+    getTaskById: ({ taskList }) => (id) => {
+      return taskList[id];
     }
   },
   mutations: {

@@ -1,27 +1,25 @@
 <template>
   <div class="main-wrapper">
     <Header @openModal="onOpenModal" />
-    <DaysSwiper :initialSlideIndex="initialSlideIndex" v-if="isLoaded" />
+    <DaysSwiper
+      :initialSlideIndex="initialSlideIndex"
+      v-if="isLoaded"
+      @editTask="onEditTask"
+    />
   </div>
   <ModalWrapper
     ref="modal"
-    :taskDataProp="defaultTaskData"
+    :taskDataProp="taskData"
     @newTaskSubmit="onNewTaskSubmit"
     @closeModal="onCloseModal"
     v-if="showModal"
   />
 </template>
-/*
-  https://medium.com/js-dojo/how-to-build-a-reusable-vuejs-modal-component-fc8d7f3b4735
-  https://www.digitalocean.com/community/tutorials/vuejs-vue-modal-component
-  https://v3.vuejs.org/guide/component-slots.html#slot-content
-  https://v3.vuejs.org/examples/modal.html
-  https://vuex.vuejs.org/ru/guide/getters.html
- */
+
 <script>
   import DaysSwiper from "./components/DaysSwiper.vue";
   import Header from "./components/Header.vue";
-  import ModalWrapper from "./components/ModalWrapper.vue";
+  import ModalWrapper from "./components/NewTaskModal.vue";
   import { mapGetters, mapActions } from "vuex";
 
   export default {
@@ -40,25 +38,35 @@
           title: "",
           text: "",
           date: new Date(),
-          type: this.getTaskTypeByName("common"),
-          timetype: this.getTaskTimeTypeByName("single"),
-          image: this.getIconImageByName("common")
-        }
+          type: this.getTaskTypeByName()("common"),
+          timetype: this.getTaskTimeTypeByName()("single"),
+          image: this.getIconImageByName()("common")
+        },
+        taskData: Object.assign({}, this.defaultTaskData)
       };
     },
     methods: {
-      toggleModal: function() {
-        // let modal = this.$refs.modal;
-        // modal.openModal();
-        // console.log(modal.newTask);
-        this.showModal = !this.showModal;
+      onEditTask(id) {
+        const task = this.getTaskById()(id);
+
+        const template = {
+          title: task.title,
+          text: task.text,
+          date: task.date,
+          type: task.type,
+          timetype: task.timetype,
+          image: task.image
+        };
+
+        // console.log(template);
+
+        this.onOpenModal(template);
       },
       onOpenModal(taskTemplate) {
-        // console.log(this.getTaskTypeByName("common"));
         if (taskTemplate) {
-          console.log("1");
+          this.taskData = Object.assign({}, taskTemplate);
         } else {
-          console.log("2");
+          this.taskData = Object.assign({}, this.defaultTaskData);
         }
         this.showModal = true;
       },
@@ -66,14 +74,14 @@
         this.showModal = false;
       },
       ...mapActions("tasksStore", ["addNewTask", "initTaskList"]),
-      ...mapGetters("tasksStore", ["getTasksByDate"]),
+      ...mapGetters("tasksStore", ["getTasksByDate", "getTaskById"]),
       ...mapGetters([
         "getTaskTypeByName",
         "getTaskTimeTypeByName",
         "getIconImageByName"
       ]),
       onNewTaskSubmit(newTask) {
-        newTask.date = this.$moment(newTask.date, "DD-MM-YYYY").unix();
+        // newTask.date = this.$moment(newTask.date, "DD-MM-YYYY").unix();
         this.addNewTask(newTask);
       },
       calcInitialSlideIndex() {

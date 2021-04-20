@@ -1,44 +1,43 @@
 <template>
   <div class="header-wrapper">
     <p>Header</p>
-    <button class="add-task-button" v-on:click="openAddTaskModal">
+    <button v-on:click="test" style="height:32px">test</button>
+    <button class="add-task-button" v-on:click="openNewTaskModal">
       <img src="/icons_dark/plus-128.png" />
     </button>
   </div>
 </template>
 
 <script>
-  import { mapActions, mapGetters } from "vuex";
+  import { mapGetters } from "vuex";
 
   export default {
     name: "Header",
-    methods: {
-      ...mapActions("tasksStore", ["addNewTask"]),
-      ...mapGetters([
-        "getTaskTypeByName",
-        "getTaskTimeTypeByName",
-        "getIconImageByName"
-      ]),
-      openAddTaskModal() {
-        // this.$root.openModal();
-        this.$emit("openModal", this.newTaskTemplate);
-      }
-      /* generateExampleTask() {
-        this.exampleTask.id = this.exampleTask.id + 1;
-        return this.exampleTask;
-      } */
-    },
     data() {
       return {
         newTaskTemplate: {
           title: "",
           text: "",
-          date: new Date(),
-          type: this.getTaskTypeByName("common"),
-          timetype: this.getTaskTimeTypeByName("single"),
-          image: this.getIconImageByName("common")
+          date: new Date().getTime() / 1000,
+          type: this.getTaskTypeByName()("common"),
+          timetype: this.getTaskTimeTypeByName()("single"),
+          image: this.getIconImageByName()("common")
         }
       };
+    },
+    methods: {
+      ...mapGetters([
+        "getTaskTypeByName",
+        "getTaskTimeTypeByName",
+        "getIconImageByName"
+      ]),
+      openNewTaskModal() {
+        this.$emit("openModal", this.newTaskTemplate);
+      },
+      test() {
+        const q = this.getIconImageByName()("payment");
+        console.log(q);
+      }
     }
   };
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div id="testmodal">
-    <!-- <div id="testmodal" v-if="isVisible"> -->
     <div class="date-picker">
-      <date-picker
+      <DatePicker
         v-model="newTask.date"
         :value="newTask.date"
-        :is-dark="dpSetting.isDark"
-        :color="dpSetting.color"
+        :is-dark="dpSettings.isDark"
+        :color="dpSettings.color"
+        :model-config="dpSettings.modelConfig"
         @dayclick="onDayClick"
-      ></date-picker>
+      ></DatePicker>
     </div>
     <div class="modal-box">
       <div class="left-box">
@@ -102,6 +102,7 @@
   import { mapGetters } from "vuex";
 
   export default {
+    name: "NewTaskModal",
     props: {
       taskDataProp: {
         type: Object
@@ -109,19 +110,21 @@
     },
     data() {
       return {
-        // visible: false,
         newTask: {
           title: this.taskDataProp.title,
           text: this.taskDataProp.text,
-          date: this.taskDataProp.date,
+          date: this.taskDataProp.date * 1000,
           type: this.taskDataProp.type,
           timetype: this.taskDataProp.timetype,
           image: this.taskDataProp.image
         },
-        dpSetting: {
+        dpSettings: {
           isDark: true,
           color: "green",
-          trimWeeks: true
+          trimWeeks: true,
+          modelConfig: {
+            type: "number"
+          }
         },
         isPickingType: false,
         isPickingImage: false,
@@ -142,12 +145,8 @@
         "getTimeTypes"
       ]),
       closeModal() {
-        // this.visible = false;
         this.$emit("closeModal");
       },
-      /* openModal() {
-        this.visible = true;
-      }, */
       validateOnSubmit() {
         if (!(this.newTask.title && this.newTask.text)) {
           console.log("submit failed");
@@ -157,10 +156,10 @@
       },
       submit() {
         this.$emit("newTaskSubmit", this.newTask);
-        this.newTask = {
+        /* this.newTask = {
           title: "",
           text: "",
-          date: new Date(),
+          date: new Date().getTime(),
           type: {
             name: "common"
           },
@@ -173,13 +172,14 @@
             file: "/task_icon/common_128.png"
           }
           // date-picker: this.$moment().format("DD-MM-YYYY")
-        };
+        }; */
         this.isPickingImage = false;
         this.isPickingType = false;
         this.closeModal();
       },
       onDayClick(day) {
-        console.log("dayClick", day);
+        console.log("onDayClick", day);
+        // console.log("newTask.date", this.newTask.date);
       },
 
       timetypePickerExpand() {
@@ -212,9 +212,6 @@
       }
     },
     computed: {
-      isVisible: function() {
-        return this.visible;
-      },
       selectedTypeName() {
         return this.newTask.type.name;
       },
