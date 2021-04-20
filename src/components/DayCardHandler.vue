@@ -15,61 +15,66 @@
       v-for="(taskData, index) in taskArray"
       :key="index"
       :cardData="taskData"
-      :forceExpand="forceExpand[index]"
+      :forceExpand="false"
       @editTask="onEditTask"
-      @cardClick="onCardClick"
     />
   </div>
 </template>
 
 <script>
-    import TaskCard from "@/components/TaskCard.vue";
+  import TaskCard from "@/components/TaskCard.vue";
 
-    export default {
-      name: "DayCardHandler",
-      components: {
-        TaskCard
+  export default {
+    name: "DayCardHandler",
+    components: {
+      TaskCard
+    },
+    data() {
+      return {
+        forceExpand: []
+      };
+    },
+    props: { taskArray: Array, date: String },
+    /**
+     * forceExpand
+     * 0 - collapse all
+     * 1 - collapsed single
+     * 2 - expanded single
+     * 3 - expand all
+     */
+    methods: {
+      expandAllCards() {
+        console.log("expand all");
+        this.forceExpand.forEach((e) => (e = true));
+        console.log("Outer.forceExpand", this.forceExpand);
       },
-      data() {
-        return {
-          forceExpand: this.
-        };
+      collapseAllCards() {
+        console.log("collapse all old val:", this.forceExpand);
+        this.forceExpand.forEach((e) => (e = false));
+        console.log("Outer.forceExpand", this.forceExpand);
       },
-      props: { taskArray: Array, date: String },
-      /**
-       * forceExpand
-       * 0 - collapse all
-       * 1 - collapsed single
-       * 2 - expanded single
-       * 3 - expand all
-       */
-      methods: {
-        expandAllCards() {
-          console.log("expand all");
-          this.forceExpand.forEach((e) => (e = true));
-          console.log("Outer.forceExpand", this.forceExpand);
-        },
-        collapseAllCards() {
-          console.log("collapse all old val:", this.forceExpand);
-          this.forceExpand.forEach((e) => (e = false));
-          console.log("Outer.forceExpand", this.forceExpand);
-        },
-        onCardClick(state) {
-          this.forceExpand = state;
-        },
-        onEditTask(id) {
-          this.$emit("editTask", id);
-        },
-        prepareForceExpandArray(taskArray) {
-          
-        }
+      onEditTask(id) {
+        this.$emit("editTask", id);
       },
-      computed: {
-        headerDate: function() {
-          return this.$moment(this.date).format("DD-MM-YYYY");
-        }
+      prepareForceExpandArray(taskArray) {
+        const obj = this.convertArrayToObject(taskArray, "id");
+        console.log(obj);
+      },
+      convertArrayToObject(taskArray, key) {
+        return taskArray.reduce((obj, item) => {
+          return {
+            ...obj,
+            [item[key]]: item
+          };
+        }, {});
       }
-    };
+    },
+    computed: {
+      headerDate: function() {
+        return this.$moment(this.date).format("DD-MM-YYYY");
+      }
+    }
+  };
 </script>
 
 <style scoped>

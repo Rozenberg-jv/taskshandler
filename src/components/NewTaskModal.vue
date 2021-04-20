@@ -175,6 +175,7 @@
         }; */
         this.isPickingImage = false;
         this.isPickingType = false;
+        this.isPickingTimeType = false;
         this.closeModal();
       },
       onDayClick(day) {
