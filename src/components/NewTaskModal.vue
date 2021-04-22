@@ -2,8 +2,7 @@
   <div id="testmodal">
     <div class="date-picker">
       <DatePicker
-        v-model="newTask.date"
-        :value="newTask.date"
+        v-model="datepickerDate"
         :is-dark="dpSettings.isDark"
         :color="dpSettings.color"
         :model-config="dpSettings.modelConfig"
@@ -113,11 +112,12 @@
         newTask: {
           title: this.taskDataProp.title,
           text: this.taskDataProp.text,
-          date: this.taskDataProp.date * 1000,
+          date: this.taskDataProp.date,
           type: this.taskDataProp.type,
           timetype: this.taskDataProp.timetype,
           image: this.taskDataProp.image
         },
+        datepickerDate: this.taskDataProp.date * 1000,
         dpSettings: {
           isDark: true,
           color: "green",
@@ -141,7 +141,7 @@
       ...mapGetters([
         "getTaskTypes",
         "getIconImages",
-        "getImageByName",
+        "getIconImageByName",
         "getTimeTypes"
       ]),
       closeModal() {
@@ -155,24 +155,10 @@
         }
       },
       submit() {
+        this.newTask.date = this.datepickerDate / 1000;
+
         this.$emit("newTaskSubmit", this.newTask);
-        /* this.newTask = {
-          title: "",
-          text: "",
-          date: new Date().getTime(),
-          type: {
-            name: "common"
-          },
-          timetype: {
-            name: "single",
-            image: "/icons_dark/clock-single-128.png"
-          },
-          image: {
-            name: "common",
-            file: "/task_icon/common_128.png"
-          }
-          // date-picker: this.$moment().format("DD-MM-YYYY")
-        }; */
+
         this.isPickingImage = false;
         this.isPickingType = false;
         this.isPickingTimeType = false;
@@ -204,6 +190,8 @@
       typePickerPick(type) {
         console.log("typePickerPick", type);
         this.newTask.type = type;
+        this.newTask.image = this.getIconImageByName()(type.name);
+        console.log(this.newTask.image);
         this.isPickingType = false;
       },
       imagePickerPick(image) {

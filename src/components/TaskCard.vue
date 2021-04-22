@@ -63,17 +63,16 @@
         type: Object
       },
       forceExpand: {
-        type: Boolean
+        type: Number
       }
     },
     methods: {
       ...mapActions("tasksStore", ["removeTask"]),
       onCardClick() {
-        this.isExpanded = !this.isExpanded;
+        this.isExpanded = 0;
         console.log("click, expanded: ", this.isExpanded);
-        // this.$emit("cardClick", this.isExpanded);
+        this.$emit("cardClick", this.isExpanded);
       },
-      // action handlers
       onRemoveClick(id, e) {
         e.stopPropagation();
         if (confirm("are you sure?")) {
@@ -93,7 +92,8 @@
     },
     computed: {
       computeIsExpanded() {
-        return this.isExpanded;
+        return this.isExpanded >= 0 ? true : false;
+        // return this.isExpanded;
       },
       dateComputed() {
         return this.$moment.unix(this.cardData.date).format("LLLL");

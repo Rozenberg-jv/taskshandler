@@ -1,18 +1,12 @@
-const iconPathPrefix = "/task_icon/";
-const iconExt = ".png";
-
 const taskIconImagesStore = {
   state: {
     taskIconImages: [
-      { name: "common", file: "common_128" },
-      { name: "birthday", file: "birthday_96" },
-      { name: "payment", file: "coin_stack_90" },
-      { name: "urgent", file: "fire_96" },
-      { name: "vue", file: "vue" }
-    ].map((i) => {
-      i.file = iconPathPrefix + i.file + iconExt;
-      return i;
-    })
+      { name: "common", file: "/task_icon/common_128.png" },
+      { name: "birthday", file: "/task_icon/birthday_96.png" },
+      { name: "payment", file: "/task_icon/coin_stack_90.png" },
+      { name: "urgent", file: "/task_icon/fire_96.png" },
+      { name: "vue", file: "/task_icon/vue.png" }
+    ]
   },
   getters: {
     getIconImages({ taskIconImages }) {

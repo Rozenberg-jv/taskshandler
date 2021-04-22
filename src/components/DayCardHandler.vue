@@ -15,8 +15,9 @@
       v-for="(taskData, index) in taskArray"
       :key="index"
       :cardData="taskData"
-      :forceExpand="false"
+      :forceExpand="forceExpand"
       @editTask="onEditTask"
+      @cardClick="onCardClick"
     />
   </div>
 </template>
@@ -31,42 +32,22 @@
     },
     data() {
       return {
-        forceExpand: []
+        forceExpand: -1
       };
     },
     props: { taskArray: Array, date: String },
-    /**
-     * forceExpand
-     * 0 - collapse all
-     * 1 - collapsed single
-     * 2 - expanded single
-     * 3 - expand all
-     */
     methods: {
       expandAllCards() {
-        console.log("expand all");
-        this.forceExpand.forEach((e) => (e = true));
-        console.log("Outer.forceExpand", this.forceExpand);
+        this.forceExpand = 1;
       },
       collapseAllCards() {
-        console.log("collapse all old val:", this.forceExpand);
-        this.forceExpand.forEach((e) => (e = false));
-        console.log("Outer.forceExpand", this.forceExpand);
+        this.forceExpand = -1;
       },
       onEditTask(id) {
         this.$emit("editTask", id);
       },
-      prepareForceExpandArray(taskArray) {
-        const obj = this.convertArrayToObject(taskArray, "id");
-        console.log(obj);
-      },
-      convertArrayToObject(taskArray, key) {
-        return taskArray.reduce((obj, item) => {
-          return {
-            ...obj,
-            [item[key]]: item
-          };
-        }, {});
+      onCardClick() {
+        this.forceExpand = 0;
       }
     },
     computed: {
@@ -81,6 +62,7 @@
   .day-cards-handler {
     width: 650px;
     min-height: 150px;
+    margin-bottom: 16px;
 
     display: flex;
     flex-direction: column;
