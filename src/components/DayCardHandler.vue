@@ -15,7 +15,7 @@
       v-for="(taskData, index) in taskArray"
       :key="index"
       :cardData="taskData"
-      :forceExpand="forceExpand"
+      :expandState="findExpandStateById(taskData.id).state"
       @editTask="onEditTask"
       @cardClick="onCardClick"
     />
@@ -32,22 +32,33 @@
     },
     data() {
       return {
-        forceExpand: -1
+        expandState: this.prepareCardsState()
       };
     },
     props: { taskArray: Array, date: String },
     methods: {
       expandAllCards() {
-        this.forceExpand = 1;
+        this.expandState.forEach((state) => (state.state = true));
       },
       collapseAllCards() {
-        this.forceExpand = -1;
+        this.expandState.forEach((state) => (state.state = false));
       },
       onEditTask(id) {
         this.$emit("editTask", id);
       },
-      onCardClick() {
-        this.forceExpand = 0;
+      onCardClick(id, newState) {
+        const cardState = this.findExpandStateById(id);
+        cardState.state = newState;
+      },
+      prepareCardsState() {
+        let stateArray = [];
+        for (let task of this.taskArray) {
+          stateArray.push(Object.assign({}, { id: task.id, state: false }));
+        }
+        return stateArray;
+      },
+      findExpandStateById(id) {
+        return this.expandState.find((item) => item.id === id);
       }
     },
     computed: {

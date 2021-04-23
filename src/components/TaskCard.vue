@@ -49,7 +49,7 @@
     data() {
       return {
         defaultImageName: "/task_icon/common_128.png",
-        isExpanded: this.forceExpand,
+        isExpanded: this.expandState,
         image: this.cardData.image
           ? this.cardData.image.file
             ? this.cardData.image.file
@@ -62,16 +62,15 @@
       cardData: {
         type: Object
       },
-      forceExpand: {
-        type: Number
+      expandState: {
+        type: Boolean
       }
     },
     methods: {
       ...mapActions("tasksStore", ["removeTask"]),
       onCardClick() {
-        this.isExpanded = 0;
-        console.log("click, expanded: ", this.isExpanded);
-        this.$emit("cardClick", this.isExpanded);
+        this.isExpanded = !this.isExpanded;
+        this.$emit("cardClick", this.cardData.id, this.isExpanded);
       },
       onRemoveClick(id, e) {
         e.stopPropagation();
@@ -85,15 +84,13 @@
       }
     },
     watch: {
-      forceExpand(newVal) {
-        console.log("watch, newVal: " + newVal);
+      expandState(newVal) {
         this.isExpanded = newVal;
       }
     },
     computed: {
       computeIsExpanded() {
-        return this.isExpanded >= 0 ? true : false;
-        // return this.isExpanded;
+        return this.isExpanded;
       },
       dateComputed() {
         return this.$moment.unix(this.cardData.date).format("LLLL");
