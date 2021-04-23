@@ -1,11 +1,31 @@
 import { createWebHistory, createRouter } from "vue-router";
-import App from "@/App";
+import DaysView from "@/components/daysview/DaysView";
+import MainMenu from "@/components/mainmenu/MainMenu";
+import NotFound from "@/components/NotFound";
 
 const routes = [
   {
     path: "/",
-    name: "App",
-    component: App
+    name: "main",
+    components: {
+      mainmenu: MainMenu,
+      default: DaysView
+    }
+  },
+  {
+    path: "/daysview",
+    name: "daysview",
+    components: {
+      mainmenu: MainMenu,
+      default: DaysView
+    }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    components: {
+      mainmenu: MainMenu,
+      default: NotFound
+    }
   }
 ];
 

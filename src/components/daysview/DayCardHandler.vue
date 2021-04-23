@@ -23,7 +23,7 @@
 </template>
 
 <script>
-  import TaskCard from "@/components/TaskCard.vue";
+  import TaskCard from "@/components/daysview/TaskCard.vue";
 
   export default {
     name: "DayCardHandler",
@@ -114,6 +114,7 @@
   }
   .header button:hover {
     border: 2px solid #fff;
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.8);
   }
   .header button:active {
     transform: scale(0.93);
@@ -138,6 +139,6 @@
   }
 
   .header-date:hover {
-    box-shadow: 0 4px 4px 4px rgba(0, 0, 0, 0.8);
+    box-shadow: 0 2px 2px 2px rgba(0, 0, 0, 0.8);
   }
 </style>

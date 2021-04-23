@@ -17,5 +17,3 @@ moment.locale("ru", {
 app.config.globalProperties.$moment = moment;
 
 export default app.mount("#app");
-
-// app.config.globalProperties.$moment = moment;

@@ -28,7 +28,7 @@
 <script>
   import SwiperCore, { Navigation } from "swiper";
   import { Swiper, SwiperSlide } from "swiper/vue";
-  import DayCardHandler from "@/components/DayCardHandler.vue";
+  import DayCardHandler from "@/components/daysview/DayCardHandler.vue";
   import { mapGetters } from "vuex";
 
   import "swiper/swiper.min.css";
@@ -91,7 +91,7 @@
     bottom: auto;
     height: 100%;
     width: 10%;
-    background: linear-gradient(90deg, rgba(70 70 120 / 1) 50%, transparent);
+    background: linear-gradient(90deg, #6464bb 50%, transparent);
   }
 
   /* fade effect right */
@@ -105,7 +105,7 @@
     bottom: auto;
     height: 100%;
     width: 10%;
-    background: linear-gradient(-90deg, rgba(70 70 120 / 1) 50%, transparent);
+    background: linear-gradient(-90deg, #6464bb 50%, transparent);
   }
 
   .swiper-btn-prev {
