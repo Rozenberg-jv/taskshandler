@@ -14,29 +14,31 @@
 
 <style>
   .main-menu {
-    position: absolute;
-    display: none;
-  }
-  .main-menu:hover {
     display: flex;
-    /* position: absolute; */
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 24px;
+    gap: 8px;
 
-    width: 12%;
-    height: 100%;
+    position: absolute;
     left: 0;
     top: 0;
+    width: 64px;
+    height: 64px;
 
-    /* background-color: red; */
     z-index: 9999;
+
+    transition: all 1.3s;
   }
-  .menu-item {
-    display: flex;
-    width: 100%;
-    height: 128px;
+  .main-menu:hover {
+    width: 128px;
+    height: 100%;
+    transition: all 1.3s;
+  }
+
+  .main-menu .menu-item {
+    opacity: 0;
+    margin: 16px;
 
     justify-content: center;
     align-items: center;
@@ -44,7 +46,16 @@
     background-color: blanchedalmond;
     font: bold 24px/32px Arial;
   }
+  .main-menu:hover .menu-item {
+    width: 100%;
+    height: 64px;
+
+    display: flex;
+    opacity: 100%;
+    transition: opacity 1.2s;
+  }
   .text {
     flex: 0 0 120px;
+    color: green;
   }
 </style>

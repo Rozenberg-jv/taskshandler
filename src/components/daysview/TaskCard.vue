@@ -31,7 +31,6 @@
         </button>
         <button @click="onEditClick(cardData.id, $event)">
           <img src="/icons_dark/edit-pencil-128.png" />
-          <!-- <img src="/icons_dark/edit-blank-64.png" /> -->
         </button>
         <button></button>
         <button></button>

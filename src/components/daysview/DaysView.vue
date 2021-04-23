@@ -7,7 +7,7 @@
       @editTask="onEditTask"
     />
   </div>
-  <ModalWrapper
+  <NewTaskModal
     ref="modal"
     :taskDataProp="taskData"
     @newTaskSubmit="onNewTaskSubmit"
@@ -19,7 +19,7 @@
 <script>
   import DaysSwiper from "@/components/daysview/DaysSwiper.vue";
   import Header from "@/components/daysview/Header.vue";
-  import ModalWrapper from "@/components/daysview/NewTaskModal.vue";
+  import NewTaskModal from "@/components/daysview/NewTaskModal.vue";
   import { mapGetters, mapActions } from "vuex";
 
   export default {
@@ -27,7 +27,7 @@
     components: {
       DaysSwiper,
       Header,
-      ModalWrapper
+      NewTaskModal
     },
     data() {
       return {
@@ -52,7 +52,7 @@
         const template = {
           title: task.title,
           text: task.text,
-          date: task.date * 1000,
+          date: task.date,
           type: task.type,
           timetype: task.timetype,
           image: task.image

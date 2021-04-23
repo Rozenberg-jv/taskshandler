@@ -2,10 +2,18 @@
   <div class="day-cards-handler">
     <div class="header">
       <div class="buttons-box">
-        <button class="expand-all-button" @click="expandAllCards">
+        <button
+          class="expand-all-button"
+          :class="{ inactive: !computeExpandAllButtonIsActive }"
+          @click="expandAllCards"
+        >
           <img src="/icons_dark/expand_vert_96.png" />
         </button>
-        <button class="collapse-all-button" @click="collapseAllCards">
+        <button
+          class="collapse-all-button"
+          :class="{ inactive: !computeCollapseAllButtonIsActive }"
+          @click="collapseAllCards"
+        >
           <img src="/icons_dark/collapse_vert_96.png" />
         </button>
       </div>
@@ -64,6 +72,12 @@
     computed: {
       headerDate: function() {
         return this.$moment(this.date).format("DD-MM-YYYY");
+      },
+      computeCollapseAllButtonIsActive() {
+        return this.expandState.find((s) => s.state === true);
+      },
+      computeExpandAllButtonIsActive() {
+        return this.expandState.find((s) => s.state === false);
       }
     }
   };
@@ -73,7 +87,8 @@
   .day-cards-handler {
     width: 650px;
     min-height: 150px;
-    margin-bottom: 16px;
+    /* margin-bottom: 16px; */
+    margin: 24px 0;
 
     display: flex;
     flex-direction: column;
@@ -124,6 +139,19 @@
   .header button img {
     width: 24px;
     height: 24px;
+  }
+
+  .header button.inactive {
+    opacity: 0.3;
+  }
+  .header button.inactive:hover {
+    border: 0;
+    box-shadow: none;
+    transform: none;
+  }
+  .header button.inactive:active {
+    border: 0;
+    border-radius: 16px;
   }
 
   .header-date {

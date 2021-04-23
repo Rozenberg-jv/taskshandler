@@ -228,7 +228,6 @@
     z-index: 9990;
 
     font-family: "Roboto", sans-serif;
-    font: bold Roboto, sans-serif;
     font-weight: bold;
   }
 

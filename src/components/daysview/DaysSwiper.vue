@@ -1,7 +1,7 @@
 <template>
   <div class="slider-wrapper">
     <swiper
-      :slides-per-view="3"
+      :slides-per-view="1"
       :space-between="0"
       :initial-slide="initialSlideIndex"
       :centered-slides="true"
@@ -153,11 +153,25 @@
     justify-content: center;
   }
 
-  .swiper-slide.swiper-slide-prev {
-    transform: translate(-200px, 0);
+  /*   .swiper-slide.swiper-slide-prev {
+    transform: translateX(55%);
+  }
+  .swiper-slide.swiper-slide-next {
+    transform: translateX(-50%);
+  } */
+  /*
+  .swiper-slide.swiper-slide-active .day-cards-handler {
+    transform: scaleX(1.1);
+    transition: all 0.5s;
   }
 
-  .swiper-slide.swiper-slide-next {
-    transform: translate(200px, 0);
+  .swiper-slide.swiper-slide-prev .day-cards-handler {
+    transform: scale(0.65);
+    transition: all 0.2s;
   }
+
+  .swiper-slide.swiper-slide-next .day-cards-handler {
+    transform: scale(0.65);
+    transition: all 0.2s;
+  } */
 </style>
