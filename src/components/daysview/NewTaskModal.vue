@@ -110,6 +110,7 @@
     data() {
       return {
         newTask: {
+          id: this.taskDataProp.id,
           title: this.taskDataProp.title,
           text: this.taskDataProp.text,
           date: this.taskDataProp.date,

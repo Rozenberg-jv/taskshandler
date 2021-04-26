@@ -6,12 +6,12 @@
       </router-link>
     </div>
     <div class="menu-item">
-      <router-link :to="{ name: 'daysview' }">
+      <router-link :to="{ name: 'notimplemented' }">
         <img src="/icons_dark/close-64.png" title="not implemented yet" />
       </router-link>
     </div>
     <div class="menu-item">
-      <router-link :to="{ name: 'daysview' }">
+      <router-link :to="{ name: 'notimplemented' }">
         <img src="/icons_dark/close-64.png" title="not implemented yet" />
       </router-link>
     </div>

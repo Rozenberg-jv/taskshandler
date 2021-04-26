@@ -21,7 +21,7 @@
     bottom: 0;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0);
+    background-color: rgba(0, 0, 0, 0.8);
     z-index: 9990;
 
     font-family: "Roboto", sans-serif;

@@ -49,18 +49,17 @@
       onEditTask(id) {
         const task = this.getTaskById()(id);
 
-        const template = {
+        /* const template = {
+          id: null,
           title: task.title,
           text: task.text,
           date: task.date,
           type: task.type,
           timetype: task.timetype,
           image: task.image
-        };
+        }; */
 
-        // console.log(template);
-
-        this.onOpenModal(template);
+        this.onOpenModal(task);
       },
       onOpenModal(taskTemplate) {
         if (taskTemplate) {

@@ -40,6 +40,7 @@ const tasksStore = {
   mutations: {
     SET_FULL_TASKS(state, tasks) {
       state.taskList = tasks;
+      // console.log(state.taskList);
     },
     ADD_NEW_TASK({ taskList }, task) {
       const id = uuid();
@@ -53,6 +54,18 @@ const tasksStore = {
 
       taskList[task.id] = task;
       console.log("new task", id);
+    },
+    UPDATE_TASK({ taskList }, task) {
+      tasksRootRef
+        .child(task.id)
+        .update(task)
+        .then(function() {
+          console.log("update succeeded", task);
+          taskList[task.id] = task;
+        })
+        .catch(function(error) {
+          console.log(`Update failed[${task.id}]: ` + error.message);
+        });
     },
     REMOVE_TASK({ taskList }, id) {
       tasksRootRef
@@ -79,8 +92,16 @@ const tasksStore = {
           console.log(error);
         });
     },
-    addNewTask({ commit }, task) {
-      commit("ADD_NEW_TASK", task);
+    addNewTask({ commit, state }, task) {
+      // console.log("taskList", state.taskList);
+      // console.log("task", task);
+      if (Object.keys(state.taskList).includes(task.id)) {
+        console.log("contains");
+        commit("UPDATE_TASK", task);
+      } else {
+        console.log("not contains");
+        commit("ADD_NEW_TASK", task);
+      }
     },
     removeTask({ commit }, id) {
       commit("REMOVE_TASK", id);

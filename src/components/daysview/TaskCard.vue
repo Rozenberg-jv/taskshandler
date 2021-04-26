@@ -16,12 +16,10 @@
 
       <div class="card-content" v-if="computeIsExpanded">
         <div>type: {{ cardData.type.name }}</div>
-        <br />
         <div>timeType: {{ cardData.timetype.name }}</div>
-        <br />
         <div>date: {{ dateComputed }}</div>
-        <br />
         <div>text: {{ cardData.text }}</div>
+        <div>id: {{ cardData.id }}</div>
       </div>
     </div>
     <div class="card-block right">
@@ -201,7 +199,7 @@
     flex-direction: column;
     height: inherit;
     margin: 0 5px;
-    overflow: hidden;
+    overflow: auto;
     align-items: center;
     justify-content: center;
     width: 100%;

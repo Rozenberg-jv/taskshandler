@@ -23,7 +23,11 @@
       v-for="(taskData, index) in taskArray"
       :key="index"
       :cardData="taskData"
-      :expandState="findExpandStateById(taskData.id).state"
+      :expandState="
+        findExpandStateById(taskData.id)
+          ? findExpandStateById(taskData.id).state
+          : false
+      "
       @editTask="onEditTask"
       @cardClick="onCardClick"
     />
@@ -67,6 +71,12 @@
       },
       findExpandStateById(id) {
         return this.expandState.find((item) => item.id === id);
+      }
+    },
+    watch: {
+      taskArray: function(newValue) {
+        // console.log("watch", newValue);
+        this.expandState = this.prepareCardsState();
       }
     },
     computed: {

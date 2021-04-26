@@ -21,6 +21,14 @@ const routes = [
     }
   },
   {
+    path: "/notimpl",
+    name: "notimplemented",
+    components: {
+      mainmenu: MainMenu,
+      default: NotFound
+    }
+  },
+  {
     path: "/:pathMatch(.*)*",
     name: "notfound",
     components: {
