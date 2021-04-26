@@ -1,8 +1,20 @@
 <template>
   <div class="main-menu">
-    <div class="menu-item"><div class="text">menu 1</div></div>
-    <div class="menu-item"><div class="text">menu 2</div></div>
-    <div class="menu-item"><div class="text">menu 3</div></div>
+    <div class="menu-item">
+      <router-link :to="{ name: 'daysview' }">
+        <img src="/icons_dark/menu-64.png" title="Days View" />
+      </router-link>
+    </div>
+    <div class="menu-item">
+      <router-link :to="{ name: 'daysview' }">
+        <img src="/icons_dark/close-64.png" title="not implemented yet" />
+      </router-link>
+    </div>
+    <div class="menu-item">
+      <router-link :to="{ name: 'daysview' }">
+        <img src="/icons_dark/close-64.png" title="not implemented yet" />
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -15,45 +27,57 @@
 <style>
   .main-menu {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: flex-start;
     align-items: center;
-    gap: 8px;
+    gap: 24px;
+    margin: 2px 8px;
 
     position: absolute;
-    left: 0;
-    top: 0;
-    width: 64px;
-    height: 64px;
+    left: 8px;
+    top: 8px;
+    max-width: 80px;
+    height: 80px;
 
     z-index: 9999;
 
-    transition: all 1.3s;
+    background: url("/icons_dark/menu-80.png") center no-repeat;
+    background-size: cover;
+    overflow: hidden;
   }
   .main-menu:hover {
-    width: 128px;
-    height: 100%;
-    transition: all 1.3s;
+    max-width: 50%;
+    background: 0;
   }
 
   .main-menu .menu-item {
-    opacity: 0;
-    margin: 16px;
+    display: flex;
+
+    width: 80px;
+    height: 80px;
+
+    transform: scale(0);
 
     justify-content: center;
     align-items: center;
 
-    background-color: blanchedalmond;
+    /* background-color: blanchedalmond; */
     font: bold 24px/32px Arial;
   }
   .main-menu:hover .menu-item {
-    width: 100%;
-    height: 64px;
-
-    display: flex;
-    opacity: 100%;
-    transition: opacity 1.2s;
+    transform: scale(1);
+    transition: all 0.5s;
   }
+
+  .menu-item a {
+    width: 100%;
+    height: 100%;
+  }
+  .menu-item img {
+    width: 100%;
+    height: 100%;
+  }
+
   .text {
     flex: 0 0 120px;
     color: green;

@@ -22,6 +22,7 @@ const routes = [
   },
   {
     path: "/:pathMatch(.*)*",
+    name: "notfound",
     components: {
       mainmenu: MainMenu,
       default: NotFound
