@@ -33,7 +33,9 @@
         <button @click="onMoveToNextDayClick">
           <img src="/icons_dark/move-right-96.png" />
         </button>
-        <button></button>
+        <button @mouseup.stop="startlong">
+          <img src="/icons_dark/clock-single-128.png" />
+        </button>
       </div>
     </div>
   </div>
@@ -50,7 +52,8 @@
         defaultImageName: "/task_icon/common_128.png",
         isExpanded: this.expandState,
         image: this.cardData.image.file,
-        type: this.cardData.type ? this.cardData.type : { name: "common" }
+        type: this.cardData.type ? this.cardData.type : { name: "common" },
+        longTimer: null
       };
     },
     props: {
@@ -83,6 +86,19 @@
         task.date += 86400;
 
         this.$emit("moveToNextDay", task);
+      },
+      startlong(event) {
+        console.log(event);
+        // event.stopPropagation();
+        this.longTimer = 1;
+        console.log(this.longTimer);
+        // setInterval(() => this.longTimer++, 2500);
+
+        console.log("end");
+      },
+      stoplong(event) {
+        event.stopPropagation();
+        // this.longTimer = null;
       }
     },
     watch: {
