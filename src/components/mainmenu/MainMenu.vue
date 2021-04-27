@@ -36,37 +36,43 @@
     position: absolute;
     left: 8px;
     top: 8px;
-    max-width: 80px;
+    width: 80px;
     height: 80px;
 
     z-index: 9999;
 
+    border-radius: 8px;
     background: url("/icons_dark/menu-80.png") center no-repeat;
     background-size: cover;
     overflow: hidden;
   }
   .main-menu:hover {
-    max-width: 50%;
-    background: 0;
+    width: calc(98% - 8px);
+    background: #00000020;
   }
 
   .main-menu .menu-item {
     display: flex;
 
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
+    margin-left: 16px;
 
     transform: scale(0);
 
     justify-content: center;
     align-items: center;
 
-    /* background-color: blanchedalmond; */
+    border-radius: 32px;
     font: bold 24px/32px Arial;
   }
   .main-menu:hover .menu-item {
     transform: scale(1);
     transition: all 0.5s;
+  }
+  .main-menu:hover .menu-item:hover {
+    transform: scale(1.1);
+    background-color: #ffffff20;
   }
 
   .menu-item a {

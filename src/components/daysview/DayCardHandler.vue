@@ -30,12 +30,14 @@
       "
       @editTask="onEditTask"
       @cardClick="onCardClick"
+      @moveToNextDay="onMoveToNextDay"
     />
   </div>
 </template>
 
 <script>
   import TaskCard from "@/components/daysview/TaskCard.vue";
+  import { mapActions } from "vuex";
 
   export default {
     name: "DayCardHandler",
@@ -49,6 +51,8 @@
     },
     props: { taskArray: Array, date: String },
     methods: {
+      // ...mapActions("tasksStore", ["changeTaskDate"]),
+      ...mapActions("tasksStore", ["addNewTask"]),
       expandAllCards() {
         this.expandState.forEach((state) => (state.state = true));
       },
@@ -57,6 +61,10 @@
       },
       onEditTask(id) {
         this.$emit("editTask", id);
+      },
+      onMoveToNextDay(task) {
+        this.addNewTask(task);
+        // this.expandState;
       },
       onCardClick(id, newState) {
         const cardState = this.findExpandStateById(id);
@@ -75,7 +83,7 @@
     },
     watch: {
       taskArray: function(newValue) {
-        // console.log("watch", newValue);
+        console.log("watch", newValue);
         this.expandState = this.prepareCardsState();
       }
     },
@@ -128,6 +136,7 @@
     align-items: center;
     background: none;
     border: 0;
+    /* border: red solid 2px; */
     border-radius: 16px;
 
     width: 32px;
@@ -136,6 +145,7 @@
     margin: 4px;
 
     background-color: #c0c0c0e6;
+    box-shadow: 0 1px 2px 2px rgba(0, 0, 0, 0.8);
   }
   .header button:hover {
     border: 2px solid #fff;
@@ -156,7 +166,7 @@
   }
   .header button.inactive:hover {
     border: 0;
-    box-shadow: none;
+    /* box-shadow: none; */
     transform: none;
   }
   .header button.inactive:active {

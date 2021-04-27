@@ -30,7 +30,9 @@
         <button @click="onEditClick(cardData.id, $event)">
           <img src="/icons_dark/edit-pencil-128.png" />
         </button>
-        <button></button>
+        <button @click="onMoveToNextDayClick">
+          <img src="/icons_dark/move-right-96.png" />
+        </button>
         <button></button>
       </div>
     </div>
@@ -47,11 +49,7 @@
       return {
         defaultImageName: "/task_icon/common_128.png",
         isExpanded: this.expandState,
-        image: this.cardData.image
-          ? this.cardData.image.file
-            ? this.cardData.image.file
-            : "/task_icon/common_128.png"
-          : "/task_icon/common_128.png", // simplify after get rid of card.image field
+        image: this.cardData.image.file,
         type: this.cardData.type ? this.cardData.type : { name: "common" }
       };
     },
@@ -78,6 +76,13 @@
       onEditClick(id, e) {
         e.stopPropagation();
         this.$emit("editTask", id);
+      },
+      onMoveToNextDayClick(event) {
+        event.stopPropagation();
+        const task = Object.assign({}, this.cardData);
+        task.date += 86400;
+
+        this.$emit("moveToNextDay", task);
       }
     },
     watch: {

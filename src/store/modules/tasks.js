@@ -93,8 +93,6 @@ const tasksStore = {
         });
     },
     addNewTask({ commit, state }, task) {
-      // console.log("taskList", state.taskList);
-      // console.log("task", task);
       if (Object.keys(state.taskList).includes(task.id)) {
         console.log("contains");
         commit("UPDATE_TASK", task);
@@ -103,6 +101,17 @@ const tasksStore = {
         commit("ADD_NEW_TASK", task);
       }
     },
+    /* changeTaskDate({ commit, state }, cardData) {
+      console.log(state.taskList[cardData.id]);
+      console.log("newDate", cardData.date);
+      const task = state.taskList[cardData.id];
+      if (!task) return;
+
+      commit("UPDATE_TASK", cardData);
+      console.log("after");
+      console.log(task.date);
+      console.log(state.taskList[cardData.id]);
+    }, */
     removeTask({ commit }, id) {
       commit("REMOVE_TASK", id);
     }
