@@ -4,10 +4,16 @@ import store from "./store";
 import router from "./router";
 import "./plugins/firebase";
 import moment from "moment";
+import infiniteScroll from "vue-infinite-scroll";
+
+// Vue.use(infiniteScroll);
 
 const app = createApp(App);
 
-app.use(store).use(router);
+app
+  .use(store)
+  .use(router)
+  .use(infiniteScroll);
 
 moment.locale("ru", {
   longDateFormat: {

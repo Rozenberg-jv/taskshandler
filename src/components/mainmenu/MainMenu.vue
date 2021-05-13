@@ -6,8 +6,13 @@
       </router-link>
     </div>
     <div class="menu-item">
-      <router-link :to="{ name: 'notimplemented' }">
-        <img src="/icons_dark/close-64.png" title="not implemented yet" />
+      <router-link :to="{ name: 'calendarview' }">
+        <img src="/icons_dark/calendar-128.png" title="Calendar View" />
+      </router-link>
+    </div>
+    <div class="menu-item">
+      <router-link :to="{ name: 'main' }">
+        <img src="/icons_dark/close-64.png" title="Home" />
       </router-link>
     </div>
     <div class="menu-item">
@@ -27,10 +32,10 @@
 <style>
   .main-menu {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    gap: 24px;
+    gap: 20px;
     margin: 2px 8px;
 
     position: absolute;
@@ -47,8 +52,9 @@
     overflow: hidden;
   }
   .main-menu:hover {
-    width: calc(98% - 8px);
-    background: #00000020;
+    /* width: calc(98% - 8px); */
+    height: max-content;
+    background: #60606020;
   }
 
   .main-menu .menu-item {
@@ -56,7 +62,7 @@
 
     width: 64px;
     height: 64px;
-    margin-left: 16px;
+    margin-top: 8px;
 
     transform: scale(0);
 
@@ -82,10 +88,5 @@
   .menu-item img {
     width: 100%;
     height: 100%;
-  }
-
-  .text {
-    flex: 0 0 120px;
-    color: green;
   }
 </style>

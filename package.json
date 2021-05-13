@@ -15,14 +15,13 @@
     "moment": "^2.29.1",
     "swiper": "^6.4.10",
     "uuid": "^8.3.2",
-    "v-calendar": "^3.0.0-alpha.3",
     "vue": "^3.0.0",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-moment": "^4.1.0",
     "vue-router": "^4.0.6",
     "vuex": "^4.0.0"
   },
   "devDependencies": {
-    "@types/vue2-datepicker": "^3.3.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",

@@ -1,6 +1,6 @@
 <template>
   <div id="testmodal">
-    <div class="date-picker">
+    <!-- <div class="date-picker">
       <DatePicker
         v-model="datepickerDate"
         :is-dark="dpSettings.isDark"
@@ -8,7 +8,7 @@
         :model-config="dpSettings.modelConfig"
         @dayclick="onDayClick"
       ></DatePicker>
-    </div>
+    </div> -->
     <div class="modal-box">
       <div class="left-box">
         <div
@@ -97,7 +97,6 @@
 </template>
 
 <script>
-  import { DatePicker } from "v-calendar";
   import { mapGetters } from "vuex";
 
   export default {
@@ -136,7 +135,7 @@
       };
     },
     components: {
-      DatePicker
+      // DatePicker
     },
     methods: {
       ...mapGetters([
