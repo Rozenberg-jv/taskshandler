@@ -1,12 +1,6 @@
 <template>
   <div class="r-calendar-main-wrapper">
-    <div
-      v-for="(row, rindex) of daysArray"
-      :key="rindex"
-      class="r-calendar-row-wrapper"
-    >
-      <DayTile v-for="(day, dindex) of row" :key="dindex" :day="day" />
-    </div>
+    <DayTile v-for="(day, dindex) of daysArray" :key="dindex" :day="day" />
   </div>
 </template>
 
@@ -14,7 +8,7 @@
   import moment from "moment";
   import DayTile from "@/components/calendarview/DayTile";
 
-  const ROWS_COUNT = 5;
+  const DAYS_COUNT = 56;
 
   const defaultSettings = {
     type: "infinit",
@@ -39,22 +33,21 @@
     methods: {
       initDays() {
         const tDate = moment(this.currentDate)
-          .subtract(2, "week")
+          .subtract(1, "week")
           .startOf("week");
-        for (let row = 0; row < ROWS_COUNT; row++) {
-          this.daysArray.push([]);
-          for (let day = 0; day < 7; day++) {
-            let date = moment(tDate.add(1, "day"));
-            let data = { date: date, eventsArray: [] };
-            this.daysArray[row].push(data);
-          }
+        for (let day = 0; day < DAYS_COUNT; day++) {
+          let date = moment(tDate.add(1, "day"));
+          let data = { date: date, eventsArray: [] };
+          this.daysArray.push(data);
         }
-
         // select today
-        let today = this.daysArray[2].find(
-          (el) => el.date.format("D") === moment().format("D")
-        );
-        today.selected = true;
+        let today = this.daysArray.find((el) => {
+          // console.log(el.date);
+          return el.date.isSame(moment(), "day");
+        });
+        // console.log(today);
+        if (today) today.selected = true;
+        // console.log(this.daysArray);
       }
     },
     mounted() {
@@ -71,7 +64,8 @@
 <style scoped>
   .r-calendar-main-wrapper {
     display: flex;
-    flex-direction: column;
+    flex-wrap:wrap;
+    /* flex-direction: column; */
     gap: 2px;
   }
 

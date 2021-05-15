@@ -38,7 +38,7 @@
       }
     },
     mounted() {
-      
+
     }
   };
 </script>

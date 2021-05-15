@@ -56,6 +56,7 @@
   .r-calendar-day-wrapper {
     display: flex;
     width: 160px;
+    height: 160px;
 
     border: 1px solid dodgerblue;
     /* border: 1px solid darkgray; */
@@ -76,10 +77,10 @@
     background-color: dodgerblue;
   }
 
-  .r-calendar-day-number.day-selected {
-    background-color: green;
-  }
   .r-calendar-day-wrapper.day-selected {
     border: 3px solid white;
+  }
+  .r-calendar-day-number.day-selected {
+    background-color: green;
   }
 </style>
