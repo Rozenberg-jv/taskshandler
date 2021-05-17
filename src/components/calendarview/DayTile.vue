@@ -9,7 +9,7 @@
     >
       {{ data.date.format("D") }}
     </div>
-    .
+    {{ data.date.format("MM") }}
   </div>
 </template>
 
@@ -59,10 +59,11 @@
     height: 160px;
 
     border: 1px solid dodgerblue;
-    /* border: 1px solid darkgray; */
     box-sizing: border-box;
 
     background-color: lightgrey;
+
+    pointer-events: none;
   }
   .r-calendar-day-number {
     display: flex;
@@ -78,7 +79,7 @@
   }
 
   .r-calendar-day-wrapper.day-selected {
-    border: 3px solid white;
+    border: 3px solid yellow;
   }
   .r-calendar-day-number.day-selected {
     background-color: green;

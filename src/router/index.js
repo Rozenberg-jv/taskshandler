@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import DaysView from "@/components/daysview/DaysView";
 import MainMenu from "@/components/mainmenu/MainMenu";
-import CalendarView from "@/components/calendarview/CalendarView";
+import RozenCalendar from "@/components/calendarview/RozenCalendar";
 import NotFound from "@/components/NotFound";
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
     name: "main",
     components: {
       mainmenu: MainMenu,
-      default: CalendarView
+      default: RozenCalendar
     }
   },
   {
@@ -26,7 +26,7 @@ const routes = [
     name: "calendarview",
     components: {
       mainmenu: MainMenu,
-      default: CalendarView
+      default: RozenCalendar
     }
   },
   {
